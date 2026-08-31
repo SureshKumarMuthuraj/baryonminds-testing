@@ -1,0 +1,13 @@
+{
+  "platformName": "Android",
+  "automationName": "UiAutomator2",
+
+"deviceName": "Pixel_7",
+  "appPackage": "com.baryonminds.revaliyo",
+  "appActivity": "com.baryonminds.revaliyo.app.MainActivity",
+  "noReset": true,
+  "appiumServerUrl": "http://127.0.0.1:4723",
+    "uiautomator2ServerLaunchTimeout": "120",
+"adbExecTimeout": "120",
+"uiautomator2ServerInstallTimeout": "120"
+}
