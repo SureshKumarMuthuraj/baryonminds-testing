@@ -60,7 +60,7 @@ public class StepDefinitions {
 
 	@Then("user validates that content description {string} is {string}")
 	public void validateContentDescription(String contentDescription, String expectedState) {
-		pageObjects.isContentDescriptionDisplayed(contentDescription, expectedState);
+		pageObjects.isContentDescriptionDisplayedOrNotDisplayed(contentDescription, expectedState);
 	}
 
 }
