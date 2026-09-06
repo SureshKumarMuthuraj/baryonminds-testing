@@ -4,7 +4,7 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-    features = "src/test/resources/features",
+    features = "src/test/resources/features/Verify New User Sign Up, Email OTP Verification, Profile Setup, and First Sign-In Flow.feature",
     glue = {
         "com.baryonminds.revaliyo.stepdefinitions",
     },

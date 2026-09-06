@@ -1,13 +1,17 @@
 package com.baryonminds.revaliyo.utils;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -38,19 +42,85 @@ public class Common {
 
 	}
 
+	public boolean scrollVerticallyUntilVisible(By targetLocator) {
+
+		int maxScrolls = 10;
+
+		for (int i = 0; i < maxScrolls; i++) {
+
+			// Check without calling findElement(), to avoid recursion
+			List<WebElement> elements = ldriver.findElements(targetLocator);
+
+			if (!elements.isEmpty() && elements.get(0).isDisplayed()) {
+				return true;
+			}
+
+			// Find vertical scrollable elements
+			List<WebElement> scrollables = ldriver.findElements(By.xpath("//*[@scrollable='true']"));
+
+			if (scrollables.isEmpty()) {
+				return false;
+			}
+
+			boolean scrolled = false;
+
+			for (WebElement scrollable : scrollables) {
+
+				try {
+					Rectangle rect = scrollable.getRect();
+
+					Map<String, Object> args = new HashMap<>();
+					args.put("left", rect.getX());
+					args.put("top", rect.getY());
+					args.put("width", rect.getWidth());
+					args.put("height", rect.getHeight());
+					args.put("direction", "down");
+					args.put("percent", 0.8);
+
+					Boolean canScroll = (Boolean) ((JavascriptExecutor) ldriver).executeScript("mobile: scrollGesture",
+							args);
+
+					scrolled = true;
+
+					// Check immediately after scrolling
+					elements = ldriver.findElements(targetLocator);
+
+					if (!elements.isEmpty() && elements.get(0).isDisplayed()) {
+						return true;
+					}
+
+					// If this scrollable cannot scroll further
+					if (Boolean.FALSE.equals(canScroll)) {
+						break;
+					}
+
+				} catch (StaleElementReferenceException e) {
+					// UI changed; retry next iteration
+				}
+			}
+
+			if (!scrolled) {
+				return false;
+			}
+		}
+
+		return false;
+	}
+
 	public WebElement findElement(By locator) {
+
+		scrollVerticalUntilVisible(locator);
+
+		// scrollVerticallyUntilVisible(locator);
 
 		wait = new FluentWait<>(ldriver).withTimeout(Duration.ofSeconds(5)).pollingEvery(Duration.ofSeconds(1))
 				.ignoring(NoSuchElementException.class).ignoring(StaleElementReferenceException.class);
 
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+
 	}
 
-	public void clickElement(By locator) {
-
-		scrollAllScrollableUntilVisible(locator);
-
-		WebElement element = findElement(locator);
+	public void clickElement(WebElement element) {
 
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 
@@ -58,9 +128,7 @@ public class Common {
 
 	}
 
-	public void setText(By locator, String value) {
-
-		WebElement element = findElement(locator);
+	public void setText(WebElement element, String value) {
 
 		element.clear();
 
@@ -73,9 +141,26 @@ public class Common {
 		boolean actualDisplayed;
 
 		try {
-			actualDisplayed = findElement(locator).isDisplayed();
-		} catch (TimeoutException | NoSuchElementException e) {
+			actualDisplayed = !ldriver.findElements(locator).isEmpty()
+					&& ldriver.findElements(locator).get(0).isDisplayed();
+		} catch (Exception e) {
 			actualDisplayed = false;
+		}
+
+		return status.equalsIgnoreCase("Displayed") == actualDisplayed;
+	}
+
+	public boolean isElementDisplayedOrNotDisplayed(WebElement element, String status) {
+
+		boolean actualDisplayed;
+		if (element == null) {
+			actualDisplayed = false;
+		} else {
+			try {
+				actualDisplayed = element.isDisplayed();
+			} catch (TimeoutException | NoSuchElementException e) {
+				actualDisplayed = false;
+			}
 		}
 
 		return status.equalsIgnoreCase("Displayed") == actualDisplayed;
@@ -106,7 +191,7 @@ public class Common {
 
 	public boolean scrollAllScrollableUntilVisible(By target) {
 
-		int maxRounds = 5;
+		int maxRounds = 3;
 
 		for (int round = 0; round < maxRounds; round++) {
 
@@ -141,5 +226,178 @@ public class Common {
 		}
 
 		return false;
+	}
+
+	public boolean scrollVerticalUntilVisible(By target) {
+
+		int maxScrolls = 10;
+
+		// Already visible
+		List<WebElement> targets = ldriver.findElements(target);
+
+		if (!targets.isEmpty() && targets.get(0).isDisplayed()) {
+			return true;
+		}
+
+		// ==========================================
+		// Scroll DOWN - search for element below
+		// ==========================================
+		for (int i = 0; i < maxScrolls; i++) {
+
+			List<WebElement> scrollViews = ldriver.findElements(By.className("android.widget.ScrollView"));
+
+			if (scrollViews.isEmpty()) {
+				break;
+			}
+
+			WebElement scrollView = scrollViews.get(0);
+
+			Rectangle rect = scrollView.getRect();
+
+			int x = rect.getX() + rect.getWidth() / 2;
+
+			int startY = rect.getY() + (int) (rect.getHeight() * 0.80);
+
+			int endY = rect.getY() + (int) (rect.getHeight() * 0.20);
+
+			performSwipe(x, startY, x, endY);
+
+			// Check target
+			targets = ldriver.findElements(target);
+
+			if (!targets.isEmpty() && targets.get(0).isDisplayed()) {
+				return true;
+			}
+		}
+
+		// ==========================================
+		// Scroll UP - search for element above
+		// ==========================================
+		for (int i = 0; i < maxScrolls; i++) {
+
+			List<WebElement> scrollViews = ldriver.findElements(By.className("android.widget.ScrollView"));
+
+			if (scrollViews.isEmpty()) {
+				break;
+			}
+
+			WebElement scrollView = scrollViews.get(0);
+
+			Rectangle rect = scrollView.getRect();
+
+			int x = rect.getX() + rect.getWidth() / 2;
+
+			int startY = rect.getY() + (int) (rect.getHeight() * 0.20);
+
+			int endY = rect.getY() + (int) (rect.getHeight() * 0.80);
+
+			performSwipe(x, startY, x, endY);
+
+			// Check target
+			targets = ldriver.findElements(target);
+
+			if (!targets.isEmpty() && targets.get(0).isDisplayed()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private void performSwipe(int startX, int startY, int endX, int endY) {
+
+		PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+
+		Sequence swipe = new Sequence(finger, 0);
+
+		swipe.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), startX, startY));
+
+		swipe.addAction(finger.createPointerDown(0));
+
+		swipe.addAction(finger.createPointerMove(Duration.ofMillis(800), PointerInput.Origin.viewport(), endX, endY));
+
+		swipe.addAction(finger.createPointerUp(0));
+
+		ldriver.perform(Collections.singletonList(swipe));
+	}
+
+	public void clickOutsidePopup(WebElement popup) {
+
+		Rectangle rect = popup.getRect();
+		Dimension screen = ldriver.manage().window().getSize();
+
+		int x;
+		int y;
+
+		// Tap to the left of the popup if space is available
+		if (rect.getX() > 10) {
+			x = rect.getX() / 2;
+			y = rect.getY() + rect.getHeight() / 2;
+		}
+		// Otherwise tap to the right
+		else if (rect.getX() + rect.getWidth() < screen.getWidth() - 10) {
+			x = rect.getX() + rect.getWidth() + (screen.getWidth() - (rect.getX() + rect.getWidth())) / 2;
+			y = rect.getY() + rect.getHeight() / 2;
+		}
+		// Otherwise tap above the popup
+		else {
+			x = screen.getWidth() / 2;
+			y = rect.getY() / 2;
+		}
+
+		new PointerInput(PointerInput.Kind.TOUCH, "touch");
+		PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+
+		Sequence tap = new Sequence(finger, 1);
+		tap.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), x, y));
+		tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+		tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+
+		ldriver.perform(Collections.singletonList(tap));
+
+		// Verify popup is closed
+//		isElementDisplayedOrNotDisplayed(popup, "Not Displayed");
+	}
+
+	public void setCheckbox(WebElement checkboxTextElement, String status) {
+
+		List<WebElement> checkboxes = ldriver.findElements(By.className("android.widget.CheckBox"));
+
+		Rectangle textRect = checkboxTextElement.getRect();
+
+		WebElement checkbox = null;
+
+		for (WebElement cb : checkboxes) {
+
+			Rectangle cbRect = cb.getRect();
+
+			// Checkbox is immediately to the left of the text
+			if (Math.abs(cbRect.getY() - textRect.getY()) <= 2 && cbRect.getX() < textRect.getX()) {
+
+				checkbox = cb;
+				break;
+			}
+		}
+
+		if (checkbox == null) {
+			throw new NoSuchElementException("Checkbox not found for text element: " + checkboxTextElement);
+		}
+
+		boolean shouldBeChecked;
+
+		if (status.equalsIgnoreCase("checked")) {
+			shouldBeChecked = true;
+		} else if (status.equalsIgnoreCase("unchecked")) {
+			shouldBeChecked = false;
+		} else {
+			throw new IllegalArgumentException(
+					"Invalid checkbox status: " + status + ". Expected 'checked' or 'unchecked'.");
+		}
+
+		boolean isChecked = Boolean.parseBoolean(checkbox.getAttribute("checked"));
+
+		if (isChecked != shouldBeChecked) {
+			checkbox.click();
+		}
 	}
 }

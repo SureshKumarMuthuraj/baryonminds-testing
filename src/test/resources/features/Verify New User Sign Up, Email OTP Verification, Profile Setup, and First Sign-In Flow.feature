@@ -1,0 +1,29 @@
+Feature: Verify New User Sign Up, Email OTP Verification, Profile Setup, and First Sign-In Flow
+
+Scenario: Verify New User Sign Up, Email OTP Verification, Profile Setup, and First Sign-In Flow
+Given user clicks on "Allow" button
+Then user validates that text "Welcome back" is "Displayed"
+And user clicks on "Sign up" button
+Given user load test data from "accountCreation.json"
+Then user validates that text field "Full Name" is "Displayed"
+Then user validates that text field "Display Name (optional)" is "Displayed"
+Then user validates that text field "Email" is "Displayed"
+Then user validates that text field "Password" is "Displayed"
+Then user validates that text field "Confirm Password" is "Displayed"
+
+Then user validates that checkbox "I agree to the Terms & Conditions" is "Displayed"
+Then user validates that checkbox "I agree to the Privacy Policy" is "Displayed"
+
+Then user validates that checkbox "I'd like push notifications about my swaps and offers (optional)." is "Displayed"
+Then user validates that button "Create Account" is "Displayed"
+
+And user enters value "Full Name"
+And user enters value "Display Name (optional)"
+And user enters value "Email"
+And user enters value "Password"
+And user enters value "Confirm Password"
+
+And user sets the checkbox "I agree to the Terms & Conditions" to "checked"
+And user sets the checkbox "I agree to the Privacy Policy" to "checked"
+And user clicks on "Create Account" button
+And user gets the "OTP" from the email
