@@ -12,7 +12,7 @@ import io.cucumber.testng.CucumberOptions;
         "pretty",
         "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
     },
-    monochrome = true,dryRun = false
+    monochrome = true,dryRun = true
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
 }

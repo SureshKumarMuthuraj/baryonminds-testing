@@ -55,7 +55,7 @@ public class PageObjects {
 
 		By locator = By.xpath("//android.widget.Button[normalize-space(@text)='" + fieldName + "']"
 				+ " |  //android.view.View[@clickable='true']/android.widget.TextView[@text='" + fieldName
-				+ "'] | //android.widget.TextView[@text='Sign up' and @clickable='true']");
+				+ "'] | //android.widget.TextView[@text='"+ fieldName +"' and @clickable='true']");
 
 		WebElement element = common.findElement(locator);
 
@@ -93,7 +93,7 @@ public class PageObjects {
 		fieldName = fieldName.trim();
 
 		By locator = By
-				.xpath("//android.widget.TextView[@text='" + fieldName + "']//ancestor::*[@pane-title='Dialogue']");
+				.xpath("//android.widget.TextView[@text='" + fieldName + "']//ancestor::*[@pane-title='Dialog']");
 
 		WebElement element = common.findElement(locator);
 

@@ -171,4 +171,14 @@ public class GmailService {
 			}
 		}
 	}
+	
+	public static String getOTP(String email) throws Exception {
+		
+		Instant otpRequestedTime = Instant.now();
+		
+		String OTP = waitForOtp(email, otpRequestedTime);
+		
+		return OTP;
+		
+	}
 }

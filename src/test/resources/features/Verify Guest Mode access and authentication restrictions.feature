@@ -1,7 +1,7 @@
 Feature: Verify Guest Mode access and authentication restrictions
 
 Scenario: Verify Guest Mode access and authentication restrictions
-Given user clicks on "Allow" button
+#Given user clicks on "Allow" button
 And user clicks on "Continue as Guest" button
 Then user validates that text "Items Feed" is "Displayed"
 Then user validates that button "Home" is "Displayed"

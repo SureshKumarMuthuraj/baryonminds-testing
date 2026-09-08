@@ -44,7 +44,7 @@ public class Common {
 
 	public boolean scrollVerticallyUntilVisible(By targetLocator) {
 
-		int maxScrolls = 10;
+		int maxScrolls = 3;
 
 		for (int i = 0; i < maxScrolls; i++) {
 
@@ -113,7 +113,7 @@ public class Common {
 
 		// scrollVerticallyUntilVisible(locator);
 
-		wait = new FluentWait<>(ldriver).withTimeout(Duration.ofSeconds(5)).pollingEvery(Duration.ofSeconds(1))
+		wait = new FluentWait<>(ldriver).withTimeout(Duration.ofSeconds(30)).pollingEvery(Duration.ofSeconds(1))
 				.ignoring(NoSuchElementException.class).ignoring(StaleElementReferenceException.class);
 
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));

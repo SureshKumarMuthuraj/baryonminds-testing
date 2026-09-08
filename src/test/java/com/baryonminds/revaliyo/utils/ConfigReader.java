@@ -17,7 +17,7 @@ public class ConfigReader {
 
         try (InputStream input = ConfigReader.class
                 .getClassLoader()
-                .getResourceAsStream("config/androidDevice.json")) {
+                .getResourceAsStream("config/androidEmulator.json")) {
 
             if (input == null) {
                 throw new RuntimeException(
