@@ -57,9 +57,14 @@ public class StepDefinitions {
 		testData = DataReader.getTestData(jsonFile);
 	}
 
-	@Given("user enters value {string}")
-	public void user_enters_value(String string) throws InterruptedException {
+	@Given("user enters value in {string} text field")
+	public void user_enters_value_in_text_field(String string) throws InterruptedException {
 		pageObjects.setText(string);
+	}
+	
+	@Given("user enters value in {string} lookup field")
+	public void user_enters_value_in_lookup_field(String string) throws InterruptedException {
+		pageObjects.setTextInLookupField(string);
 	}
 
 	@Given("user clicks on {string} button")
@@ -70,6 +75,11 @@ public class StepDefinitions {
 	@Given("user clicks on {string} icon")
 	public void user_clicks_on_icon(String string) {
 		pageObjects.clickIcon(string);
+	}
+	
+	@Given("user clicks on {string} lookup field")
+	public void user_clicks_on_lookup_field(String string) {
+		pageObjects.clickLookupField(string);
 	}
 
 	@Then("user validates that content description {string} is {string}")
@@ -125,6 +135,30 @@ public class StepDefinitions {
 	@Then("user gets the {string} from the email")
 	public void user_gets_the_from_the_email(String string) throws Exception {
 		otp = GmailService.getOTP(DataReader.get("Email"));
+		
+		DataReader.set("OTP",otp);
+	}
+	
+	@Then("user validates the value of {string}")
+	public void validateFieldValue(String fieldName) {
+		pageObjects.validateFieldValue(fieldName);
+	}
+	
+	@Given("user get the existing value for {string} from {string}")
+	public void user_get_the_existing_value_for_from(String arg1, String arg2) throws Throwable {
+		pageObjects.setNewKey(arg1, arg2);
+	}
+	
+	@Then("user validates {string} field value")
+	public void user_validates_field_value(String fieldName) {
+		pageObjects.validateFieldValue(fieldName);
+
+	}
+	
+	@Then("user selects option in {string} lookup field")
+	public void user_selects_option_in_lookup_field(String fieldName) {
+		pageObjects.clickLookupFieldOption(fieldName);
+
 	}
 
 }

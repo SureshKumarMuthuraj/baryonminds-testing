@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -113,7 +114,7 @@ public class Common {
 
 		// scrollVerticallyUntilVisible(locator);
 
-		wait = new FluentWait<>(ldriver).withTimeout(Duration.ofSeconds(30)).pollingEvery(Duration.ofSeconds(1))
+		wait = new FluentWait<>(ldriver).withTimeout(Duration.ofSeconds(10)).pollingEvery(Duration.ofSeconds(1))
 				.ignoring(NoSuchElementException.class).ignoring(StaleElementReferenceException.class);
 
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
@@ -191,7 +192,7 @@ public class Common {
 
 	public boolean scrollAllScrollableUntilVisible(By target) {
 
-		int maxRounds = 3;
+		int maxRounds = 4;
 
 		for (int round = 0; round < maxRounds; round++) {
 
@@ -230,7 +231,7 @@ public class Common {
 
 	public boolean scrollVerticalUntilVisible(By target) {
 
-		int maxScrolls = 10;
+		int maxScrolls = 3;
 
 		// Already visible
 		List<WebElement> targets = ldriver.findElements(target);
@@ -399,5 +400,32 @@ public class Common {
 		if (isChecked != shouldBeChecked) {
 			checkbox.click();
 		}
+	}
+
+	public String getAttributeOfElement(WebElement element, String attribute) {
+		try {
+			return element.getAttribute(attribute);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public void waitForExpectedValue(WebElement element, String value) {
+
+		wait.until(new Function<AppiumDriver, Boolean>() {
+
+			@Override
+			public Boolean apply(AppiumDriver driver) {
+
+				String currentValue = getAttributeOfElement(element, "value");
+				String currentText = getAttributeOfElement(element, "text");
+
+				System.out.println("Current Value: " + currentValue);
+				System.out.println("Current Text: " + currentText);
+				System.out.println("Expected Value: " + value);
+
+				return value.equals(currentValue) || value.equals(currentText);
+			}
+		});
 	}
 }

@@ -74,7 +74,7 @@ public class GmailService {
 
 	    Gmail gmail = getService();
 
-	    long timeout = 60_000;
+	    long timeout = 120_000;
 	    long startTime = System.currentTimeMillis();
 
 	    while (System.currentTimeMillis() - startTime < timeout) {
@@ -109,24 +109,26 @@ public class GmailService {
 	                        Instant.ofEpochMilli(emailTime);
 
 	                // Ignore OTP emails received before the request
+	                System.out.println("emailReceivedTime: " + emailReceivedTime);
+	                System.out.println("otpRequestedTime: " + otpRequestedTime);
+
 	                if (emailReceivedTime.isBefore(otpRequestedTime)) {
 	                    continue;
 	                }
 
 	                String body = getMessageBody(fullMessage);
+	                System.out.println(
+                            "emailbody: " + body);
+	                Pattern pattern = Pattern.compile(
+	                        "<span[^>]*>\\s*(\\d{6})\\s*</span>",
+	                        Pattern.CASE_INSENSITIVE
+	                );
 
-	                Matcher matcher =
-	                        Pattern.compile("\\b\\d{6}\\b")
-	                                .matcher(body);
+	                Matcher matcher = pattern.matcher(body);
 
 	                if (matcher.find()) {
-
-	                    String otp = matcher.group();
-
-	                    System.out.println(
-	                            "OTP received: " + otp
-	                    );
-
+	                    String otp = matcher.group(1);
+	                    System.out.println("OTP received: " + otp);
 	                    return otp;
 	                }
 	            }
@@ -136,7 +138,7 @@ public class GmailService {
 	    }
 
 	    throw new RuntimeException(
-	            "OTP email was not received within 60 seconds"
+	            "OTP email was not received within 120 seconds"
 	    );
 	}
 
@@ -174,7 +176,7 @@ public class GmailService {
 	
 	public static String getOTP(String email) throws Exception {
 		
-		Instant otpRequestedTime = Instant.now();
+		Instant otpRequestedTime = Instant.now().minusSeconds(5);
 		
 		String OTP = waitForOtp(email, otpRequestedTime);
 		

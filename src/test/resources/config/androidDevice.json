@@ -3,7 +3,7 @@
   "automationName": "UiAutomator2",
     "deviceName": "SM-M356B",
   "udid": "RZCY22C51FY",
-  "appPackage": "com.baryonminds.revaliyo",
+  "appPackage": "com.baryonminds.revaliyo.staging",
   "appActivity": "com.baryonminds.revaliyo.app.MainActivity",
   "noReset": false,
   "appiumServerUrl": "http://127.0.0.1:4723",

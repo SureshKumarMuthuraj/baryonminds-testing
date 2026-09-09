@@ -40,8 +40,9 @@ public class PageObjects {
 
 		fieldName = fieldName.trim();
 
-		By locator = By.xpath(
-				"//android.widget.TextView[@text='" + fieldName + "']//following-sibling::android.widget.EditText[1]");
+		By locator = By.xpath("//android.widget.TextView[@text='" + fieldName
+				+ "']//following-sibling::android.widget.EditText[1] | " + "//android.widget.TextView[@text='"
+				+ fieldName + "']//following::android.widget.EditText[1]");
 
 		WebElement element = common.findElement(locator);
 
@@ -55,7 +56,7 @@ public class PageObjects {
 
 		By locator = By.xpath("//android.widget.Button[normalize-space(@text)='" + fieldName + "']"
 				+ " |  //android.view.View[@clickable='true']/android.widget.TextView[@text='" + fieldName
-				+ "'] | //android.widget.TextView[@text='"+ fieldName +"' and @clickable='true']");
+				+ "'] | //android.widget.TextView[@text='" + fieldName + "' and @clickable='true']");
 
 		WebElement element = common.findElement(locator);
 
@@ -93,7 +94,7 @@ public class PageObjects {
 		fieldName = fieldName.trim();
 
 		By locator = By
-				.xpath("//android.widget.TextView[@text='" + fieldName + "']//ancestor::*[@pane-title='Dialog']");
+				.xpath("//android.widget.TextView[@text='" + fieldName + "']//ancestor::*[@pane-title='Dialogue']");
 
 		WebElement element = common.findElement(locator);
 
@@ -117,8 +118,31 @@ public class PageObjects {
 
 		fieldName = fieldName.trim();
 
-		By locator = By.xpath(
-				"//android.widget.TextView[@text=\"" + fieldName + "\"]");
+		By locator = By.xpath("//android.widget.TextView[@text=\"" + fieldName + "\"]");
+
+		WebElement element = common.findElement(locator);
+
+		return element;
+
+	}
+
+	public WebElement getLookuptFieldElement(String fieldName) {
+
+		fieldName = fieldName.trim();
+
+		By locator = By.xpath("//android.widget.TextView[@text='" + fieldName + "']//following::android.view.View[1]");
+
+		WebElement element = common.findElement(locator);
+
+		return element;
+
+	}
+	
+	public WebElement getLookuptFieldOptionElement(String fieldName) {
+
+		fieldName = fieldName.trim();
+
+		By locator = By.xpath("//android.widget.TextView[@text='" + fieldName + "']//following::android.widget.TextView[1][contains(@text,'" + DataReader.get(fieldName) + "')]");
 
 		WebElement element = common.findElement(locator);
 
@@ -133,12 +157,18 @@ public class PageObjects {
 
 		common.setText(element, DataReader.get(fieldName));
 	}
+	
+	public void setTextInLookupField(String fieldName) throws InterruptedException {
+		WebElement element = getLookuptFieldElement(fieldName);
+
+		common.setText(element, DataReader.get(fieldName));
+	}
 
 	public void setCheckbox(String text, String status) {
 
-	    WebElement textElement = getCheckboxElement(text);
+		WebElement textElement = getCheckboxElement(text);
 
-	    common.setCheckbox(textElement, status);
+		common.setCheckbox(textElement, status);
 	}
 
 	public void clickButton(String fieldName) {
@@ -156,6 +186,29 @@ public class PageObjects {
 
 		common.clickElement(element);
 	}
+
+	public void closeAccountRequiredPopup(String popup) {
+
+		WebElement element = getPopUpElement(popup);
+
+		common.clickOutsidePopup(element);
+	}
+
+	public void clickLookupField(String fieldName) {
+
+		WebElement element = getLookuptFieldElement(fieldName);
+
+		common.clickElement(element);
+	}
+	
+	public void clickLookupFieldOption(String fieldName) {
+
+		WebElement element = getLookuptFieldOptionElement(fieldName);
+
+		common.clickElement(element);
+	}
+
+//	validation methods
 
 	public void isContentDescriptionDisplayedOrNotDisplayed(String fieldName, String status) {
 
@@ -233,13 +286,6 @@ public class PageObjects {
 				"Expected checkbox element '" + fieldName + "' to be " + status);
 	}
 
-	public void closeAccountRequiredPopup(String popup) {
-
-		WebElement element = getPopUpElement(popup);
-
-		common.clickOutsidePopup(element);
-	}
-
 	public void verifyAppNotNavigatedToNewPage() {
 
 		String pageSourceAfterPopup = driver.getPageSource();
@@ -251,4 +297,20 @@ public class PageObjects {
 				"App navigated to a new page after closing the popup");
 	}
 
+	public void validateFieldValue(String fieldName) {
+
+		String expectedValue = DataReader.get(fieldName);
+		WebElement element = getTextFieldElement(fieldName);
+		try {
+			common.waitForExpectedValue(element, DataReader.get(fieldName));
+		} catch (Exception e) {
+			String actualValue = common.getAttributeOfElement(element, "value");
+			Assert.fail(fieldName + " field value is not as expected. Expected value: " + expectedValue
+					+ " Actual value: " + actualValue);
+		}
+	}
+
+	public void setNewKey(String newKey, String oldKey) {
+		DataReader.set(newKey, DataReader.get(oldKey));
+	}
 }

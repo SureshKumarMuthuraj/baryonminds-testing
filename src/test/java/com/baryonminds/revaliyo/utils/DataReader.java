@@ -4,6 +4,7 @@ import java.io.InputStream;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class DataReader {
 
@@ -57,4 +58,11 @@ public class DataReader {
 
         return value.asBoolean();
     }
+    
+    public static void set(String key, String value) {
+
+    	ObjectNode objectNode = (ObjectNode) data;
+
+    	objectNode.put(key, value);
+}
 }
