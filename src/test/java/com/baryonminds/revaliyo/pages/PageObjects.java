@@ -55,8 +55,8 @@ public class PageObjects {
 		fieldName = fieldName.trim();
 
 		By locator = By.xpath("//android.widget.Button[normalize-space(@text)='" + fieldName + "']"
-				+ " |  //android.view.View[@clickable='true']/android.widget.TextView[@text='" + fieldName
-				+ "'] | //android.widget.TextView[@text='" + fieldName + "' and @clickable='true']");
+				+ " |  //android.view.View[@clickable='true' and .//android.widget.TextView[@text='" + fieldName
+				+ "']] | //android.widget.TextView[@text='" + fieldName + "' and @clickable='true'] | //android.view.View[@clickable='true' and .//android.view.View[@content-desc='"+fieldName+"']]");
 
 		WebElement element = common.findElement(locator);
 
@@ -130,7 +130,22 @@ public class PageObjects {
 
 		fieldName = fieldName.trim();
 
-		By locator = By.xpath("//android.widget.TextView[@text='" + fieldName + "']//following::android.view.View[1]");
+		By locator = By.xpath(
+				"//android.widget.TextView[@text='" + fieldName + "']//following-sibling::android.widget.EditText |"
+						+ "//android.widget.TextView[@text='" + fieldName + "']//following::android.view.View");
+
+		WebElement element = common.findElement(locator);
+
+		return element;
+
+	}
+
+	public WebElement getLookuptFieldOptionElement(String fieldName) {
+
+		fieldName = fieldName.trim();
+
+		By locator = By.xpath("//android.widget.TextView[@text='" + fieldName
+				+ "']//following::android.widget.TextView[1][contains(@text,'" + DataReader.get(fieldName) + "')]");
 
 		WebElement element = common.findElement(locator);
 
@@ -138,11 +153,9 @@ public class PageObjects {
 
 	}
 	
-	public WebElement getLookuptFieldOptionElement(String fieldName) {
+	public WebElement getVideoElement() {
 
-		fieldName = fieldName.trim();
-
-		By locator = By.xpath("//android.widget.TextView[@text='" + fieldName + "']//following::android.widget.TextView[1][contains(@text,'" + DataReader.get(fieldName) + "')]");
+	    By locator = By.className("android.view.TextureView");
 
 		WebElement element = common.findElement(locator);
 
@@ -157,7 +170,7 @@ public class PageObjects {
 
 		common.setText(element, DataReader.get(fieldName));
 	}
-	
+
 	public void setTextInLookupField(String fieldName) throws InterruptedException {
 		WebElement element = getLookuptFieldElement(fieldName);
 
@@ -171,8 +184,8 @@ public class PageObjects {
 		common.setCheckbox(textElement, status);
 	}
 
-	public void clickButton(String fieldName) {
-
+	public void clickButton(String fieldName) throws InterruptedException {
+Thread.sleep(2000);
 		pageSourceBeforePopup = driver.getPageSource();
 
 		WebElement element = getButtonElement(fieldName);
@@ -200,7 +213,7 @@ public class PageObjects {
 
 		common.clickElement(element);
 	}
-	
+
 	public void clickLookupFieldOption(String fieldName) {
 
 		WebElement element = getLookuptFieldOptionElement(fieldName);
@@ -285,13 +298,36 @@ public class PageObjects {
 		Assert.assertTrue(common.isElementDisplayedOrNotDisplayed(element, status),
 				"Expected checkbox element '" + fieldName + "' to be " + status);
 	}
+	
+	public void isVideoDisplayedOrNotDisplayed(String status) {
+		WebElement element = null;
+		try {
+			element = getVideoElement();
+		} catch (Exception e) {
+		}
+		Assert.assertTrue(common.isElementDisplayedOrNotDisplayed(element, status),
+				"Expected button element '" + element + "' to be " + status);
+	}
+	
+	public void waitTillElementDisappears(String elementType) {
+		WebElement element = null;
+		boolean status = false;
+		if(elementType.equalsIgnoreCase("Video")) {
+		try {
+			element = getVideoElement();
+			common.waitForElementToDisappear(element);
+			status = true;
+		} catch (TimeoutException e) {
+			status = false;
+		}
+		}
+		
+		Assert.assertTrue(status,"Element " + element + "has not disappeared after timeout");
+	}
 
 	public void verifyAppNotNavigatedToNewPage() {
 
 		String pageSourceAfterPopup = driver.getPageSource();
-
-		logger.info("pageSourceBeforePopup: " + pageSourceBeforePopup);
-		logger.info("pageSourceAfterPopup: " + pageSourceAfterPopup);
 
 		Assert.assertEquals(pageSourceBeforePopup, pageSourceAfterPopup,
 				"App navigated to a new page after closing the popup");

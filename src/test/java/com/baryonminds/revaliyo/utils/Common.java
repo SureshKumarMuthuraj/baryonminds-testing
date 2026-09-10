@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.jspecify.annotations.NonNull;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ElementClickInterceptedException;
@@ -122,6 +123,10 @@ public class Common {
 	}
 
 	public void clickElement(WebElement element) {
+		
+		System.out.println("Displayed : " + element.isDisplayed());
+		System.out.println("Enabled   : " + element.isEnabled());
+		System.out.println("Clickable : " + element.getAttribute("clickable"));
 
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 
@@ -427,5 +432,13 @@ public class Common {
 				return value.equals(currentValue) || value.equals(currentText);
 			}
 		});
+	}
+	
+	public void waitForElementToDisappear(WebElement element) {
+
+		wait = new FluentWait<>(ldriver).withTimeout(Duration.ofSeconds(90)).pollingEvery(Duration.ofSeconds(1))
+				.ignoring(NoSuchElementException.class).ignoring(StaleElementReferenceException.class);
+
+	    wait.until(ExpectedConditions.invisibilityOf(element));
 	}
 }

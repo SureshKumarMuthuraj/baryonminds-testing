@@ -68,7 +68,7 @@ public class StepDefinitions {
 	}
 
 	@Given("user clicks on {string} button")
-	public void user_clicks_on_button(String string) {
+	public void user_clicks_on_button(String string) throws InterruptedException {
 		pageObjects.clickButton(string);
 	}
 
@@ -79,6 +79,11 @@ public class StepDefinitions {
 	
 	@Given("user clicks on {string} lookup field")
 	public void user_clicks_on_lookup_field(String string) {
+		pageObjects.clickLookupField(string);
+	}
+	
+	@Given("user clicks on {string} content description")
+	public void user_clicks_on_content_description(String string) {
 		pageObjects.clickLookupField(string);
 	}
 
@@ -159,6 +164,16 @@ public class StepDefinitions {
 	public void user_selects_option_in_lookup_field(String fieldName) {
 		pageObjects.clickLookupFieldOption(fieldName);
 
+	}
+	
+	@Then("user waits till {string} element is disappeared")
+	public void user_waits_till_element_is_disappeared(String string) {
+	    pageObjects.waitTillElementDisappears(string);
+	}
+	
+	@Then("user validates that video is {string}")
+	public void user_validates_that_video_is(String string) {
+	   pageObjects.isVideoDisplayedOrNotDisplayed(string);
 	}
 
 }

@@ -33,7 +33,17 @@ Then user validates "Email Address" field value
 And user clicks on "Home Address" lookup field
 And user enters value in "Enter Postcode" lookup field
 And user selects option in "Enter Postcode" lookup field
-
 And user clicks on "Within 5 miles" button 
+And user clicks on "Save" button
+Then user validates that video is "Displayed"
+Then user validates that button "Play video" is "Displayed"
+And user clicks on "Play video" button
+Then user validates that button "Pause video" is "Displayed"
+And user waits till "Video" element is disappeared
+Then user validates that text "Items Feed" is "Displayed"
+Then user validates that button "Home" is "Displayed"
+Then user validates that icon "Profile" is "Displayed"
+And user clicks on "Profile" icon
+And user clicks on "Delete Account" button
+And user clicks on "Delete Account" button
 
-And user clicks on "Save" button 

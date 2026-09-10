@@ -6,6 +6,7 @@ And user clicks on "Continue as Guest" button
 Then user validates that text "Items Feed" is "Displayed"
 Then user validates that button "Home" is "Displayed"
 #Verify Swap Products
+And user clicks on "Giveaway" button
 And user clicks on "Swap" button
 Then user validates that popup "Account required" is "Not Displayed"
 Then user validates that icon "Open expanded item view" is "Displayed"
@@ -68,8 +69,8 @@ Then user validates that text field "Email" is "Displayed"
 Then user validates that text field "Password" is "Displayed"
 Then user validates that button "Sign In" is "Displayed"
 Given user load test data from "login.json"
-And user enters value "Email"
-And user enters value "Password"
+And user enters value in "Email" text field
+And user enters value in "Password" text field
 And user clicks on "Sign In" button
 Then user validates that text "Items Feed" is "Displayed"
 Then user validates that icon "Profile" is "Displayed"
