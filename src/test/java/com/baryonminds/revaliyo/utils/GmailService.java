@@ -77,69 +77,66 @@ public class GmailService {
 	    long timeout = 120_000;
 	    long startTime = System.currentTimeMillis();
 
+	    String query =
+	            "from:noreply@revaliyo.com "
+	            + "to:" + email + " "
+	            + "subject:\"Your Revaliyo verification code\"";
+
+	    Pattern pattern = Pattern.compile(
+	            "<span[^>]*>\\s*(\\d{6})\\s*</span>",
+	            Pattern.CASE_INSENSITIVE);
+
 	    while (System.currentTimeMillis() - startTime < timeout) {
 
-	        String query =
-	                "from:noreply@revaliyo.com "
-	                + "to:" + email + " "
-	                + "subject:\"Your Revaliyo verification code\"";
+	        ListMessagesResponse response = gmail.users()
+	                .messages()
+	                .list("me")
+	                .setQ(query)
+	                .setMaxResults(1L)
+	                .execute();
 
-	        ListMessagesResponse response =
-	                gmail.users()
-	                        .messages()
-	                        .list("me")
-	                        .setQ(query)
-	                        .execute();
+	        if (response.getMessages() != null
+	                && !response.getMessages().isEmpty()) {
 
-	        if (response.getMessages() != null) {
+	            Message message = response.getMessages().get(0);
 
-	            for (Message message : response.getMessages()) {
+	            Message fullMessage = gmail.users()
+	                    .messages()
+	                    .get("me", message.getId())
+	                    .setFormat("full")
+	                    .execute();
 
-	                Message fullMessage =
-	                        gmail.users()
-	                                .messages()
-	                                .get("me", message.getId())
-	                                .setFormat("full")
-	                                .execute();
+	            long emailTime = fullMessage.getInternalDate();
 
-	                // Gmail internal date is in milliseconds
-	                long emailTime = fullMessage.getInternalDate();
+	            Instant emailReceivedTime =
+	                    Instant.ofEpochMilli(emailTime);
 
-	                Instant emailReceivedTime =
-	                        Instant.ofEpochMilli(emailTime);
+	            System.out.println("emailReceivedTime: " + emailReceivedTime);
+	            System.out.println("otpRequestedTime: " + otpRequestedTime);
 
-	                // Ignore OTP emails received before the request
-	                System.out.println("emailReceivedTime: " + emailReceivedTime);
-	                System.out.println("otpRequestedTime: " + otpRequestedTime);
-
-	                if (emailReceivedTime.isBefore(otpRequestedTime)) {
-	                    continue;
-	                }
+	            if (!emailReceivedTime.isBefore(otpRequestedTime)) {
 
 	                String body = getMessageBody(fullMessage);
-	                System.out.println(
-                            "emailbody: " + body);
-	                Pattern pattern = Pattern.compile(
-	                        "<span[^>]*>\\s*(\\d{6})\\s*</span>",
-	                        Pattern.CASE_INSENSITIVE
-	                );
+
+	                System.out.println("emailbody: " + body);
 
 	                Matcher matcher = pattern.matcher(body);
 
 	                if (matcher.find()) {
 	                    String otp = matcher.group(1);
+
 	                    System.out.println("OTP received: " + otp);
+
 	                    return otp;
 	                }
 	            }
 	        }
 
-	        Thread.sleep(3000);
+	        Thread.sleep(5000);
 	    }
 
 	    throw new RuntimeException(
-	            "OTP email was not received within 120 seconds"
-	    );
+	            "OTP email was not received within 120 seconds");
 	}
 
 	private static String getMessageBody(Message message) {

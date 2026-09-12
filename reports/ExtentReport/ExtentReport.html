@@ -1,0 +1,1303 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title></title>
+<link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/extent-framework/extent-github-cdn@b00a2d0486596e73dd7326beacf352c639623a0e/commons/img/logo.png">
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/extent-framework/extent-github-cdn@b00a2d0486596e73dd7326beacf352c639623a0e/commons/img/logo.png">
+<link href="https://cdn.jsdelivr.net/gh/extent-framework/extent-github-cdn@d6562a79075e061305ccfdb82f01e5e195e2d307/spark/css/spark-style.css" rel="stylesheet" />
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/extent-framework/extent-github-cdn@7cc78ce/spark/js/jsontree.js"></script>
+<style type="text/css"></style></head><body class="spa bdd-report standard">
+  <div class="app">
+    <div class="layout">
+<div class="header navbar">
+<div class="vheader">
+<div class="nav-logo">
+<a href="#">
+<div class="logo" style="background-image: url('https://cdn.jsdelivr.net/gh/extent-framework/extent-github-cdn@b00a2d0486596e73dd7326beacf352c639623a0e/commons/img/logo.png')"></div>
+</a>
+</div>
+<ul class="nav-left">
+<li class="search-box">
+<a class="search-toggle" href="#">
+<i class="search-icon fa fa-search"></i>
+<i class="search-icon-close fa fa-close"></i>
+</a>
+</li>
+<li class="search-input"><input id="search-tests" class="form-control" type="text" placeholder="Search..."></li>
+</ul>
+<ul class="nav-right">
+<li class="m-r-10">
+<a href="#"><span class="badge badge-primary"></span></a>
+</li>
+<li class="m-r-10">
+<a href="#"><span class="badge badge-primary">Sep 12, 2026 02:05:05 PM</span></a>
+</li>
+</ul>
+</div>
+</div><div class="side-nav">
+<div class="side-nav-inner">
+<ul class="side-nav-menu">
+<li class="nav-item dropdown" onclick="toggleView('test-view')">
+<a id="nav-test" class="dropdown-toggle" href="#">
+<span class="ico"><i class="fa fa-list"></i></span>
+</a>
+</li>
+<li class="nav-item dropdown" onclick="toggleView('dashboard-view')">
+<a id="nav-dashboard" class="dropdown-toggle" href="#">
+<span class="ico"><i class="fa fa-bar-chart"></i></span>
+</a>
+</li>
+</ul>
+</div>
+</div>      <div class="vcontainer">
+        <div class="main-content">
+<div class="test-wrapper row view test-view">
+  <div class="test-list">
+    <div class="test-list-tools">
+<ul class="tools pull-left">
+<li><a href="#"><span class="font-size-14">Tests</span></a></li>
+</ul>
+<ul class="tools text-right">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-exclamation-circle"></i></a>
+<ul id="status-toggle" class="dropdown-menu dropdown-md p-v-0">
+<a class="dropdown-item" status="pass" href="#"><span>Pass</span><span class="status success"></span></a>
+<div class="dropdown-divider"></div>
+<a status="clear" class="dropdown-item" href="#"><span>Clear</span><span class="pull-right"><i class="fa fa-close"></i></span></a>
+</ul>
+</li>
+</ul>
+</div>    <div class="test-list-wrapper scrollable">
+      <ul class="test-list-item">
+        <li class="test-item"  status="pass" test-id="1"
+          author=""
+          tag=""
+          device="">
+          <div class="test-detail">
+            <p class="name">Verify New User Sign Up, Email OTP Verification, Profile Setup, and First Sign-In Flow</p>
+            <p class="text-sm">
+              <span>2:05:06 PM</span> / <span>00:02:17:322</span>
+              <span class="badge pass-bg log float-right">Pass</span>
+            </p>
+          </div>
+          <div class="test-contents d-none">
+<div class="detail-head">
+<div class="p-v-10">
+<div class="info">
+<h5 class="test-status text-pass">Verify New User Sign Up, Email OTP Verification, Profile Setup, and First Sign-In Flow</h5>
+<span class='badge badge-success'>09.12.2026 2:05:06 PM</span>
+<span class='badge badge-danger'>09.12.2026 2:07:24 PM</span>
+<span class='badge badge-default'>00:02:17:322</span>
+&middot; <span class='uri-anchor badge badge-default'>#test-id=1</span>
+<span class='badge badge-default pointer float-right ml-1 et'><i class="fa fa-chevron-down"></i></span>
+<span class='badge badge-default pointer float-right ct'><i class="fa fa-chevron-up"></i></span>
+</div>
+<div class="m-t-10 m-l-5"></div>
+</div>
+</div>
+<div class="accordion mt-4">
+  <div class="card">
+    <div class="card-header" role="tab">
+      <div class="card-title">
+        <div class="node" id="2"><span class="badge log pass-bg mr-2">Pass</span>Verify New User Sign Up, Email OTP Verification, Profile Setup, and First Sign-In Flow</div>
+      </div>
+    </div>
+        <div class="collapse">
+          <div class="card-body">
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>Given user clicks on "Allow" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Welcome back" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Sign up" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.loadTestData(java.lang.String)">
+                <span>Given user load test data from "accountCreation.json"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text field "Full Name" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text field "Display Name (optional)" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text field "Email" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text field "Password" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text field "Confirm Password" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateCheckboxFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that checkbox "I agree to the Terms & Conditions" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateCheckboxFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that checkbox "I agree to the Privacy Policy" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateCheckboxFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that checkbox "I'd like push notifications about my swaps and offers (optional)." is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateButton(java.lang.String,java.lang.String)">
+                <span>Then user validates that button "Create Account" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_text_field(java.lang.String)">
+                <span>And user enters value in "Full Name" text field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_text_field(java.lang.String)">
+                <span>And user enters value in "Display Name (optional)" text field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_text_field(java.lang.String)">
+                <span>And user enters value in "Email" text field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_text_field(java.lang.String)">
+                <span>And user enters value in "Password" text field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_text_field(java.lang.String)">
+                <span>And user enters value in "Confirm Password" text field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.setcheckbox(java.lang.String,java.lang.String)">
+                <span>And user sets the checkbox "I agree to the Terms & Conditions" to "checked"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.setcheckbox(java.lang.String,java.lang.String)">
+                <span>And user sets the checkbox "I agree to the Privacy Policy" to "checked"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Create Account" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_gets_the_from_the_email(java.lang.String)">
+                <span>And user gets the "OTP" from the email</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_text_field(java.lang.String)">
+                <span>And user enters value in "OTP" text field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Verify" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value(java.lang.String)">
+                <span>Then user validates "Full Name" field value</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value(java.lang.String)">
+                <span>Then user validates "Display Name (optional)" field value</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_text_field(java.lang.String)">
+                <span>And user enters value in "Mobile Number" text field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_get_the_existing_value_for_from(java.lang.String,java.lang.String)">
+                <span>And user get the existing value for "Email Address" from "Email"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value(java.lang.String)">
+                <span>Then user validates "Email Address" field value</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_lookup_field(java.lang.String)">
+                <span>And user clicks on "Home Address" lookup field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_lookup_field(java.lang.String)">
+                <span>And user enters value in "Enter Postcode" lookup field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_selects_option_in_lookup_field(java.lang.String)">
+                <span>And user selects option in "Enter Postcode" lookup field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Within 5 miles" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Save" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_that_video_is(java.lang.String)">
+                <span>Then user validates that video is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateButton(java.lang.String,java.lang.String)">
+                <span>Then user validates that button "Play video" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Play video" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateButton(java.lang.String,java.lang.String)">
+                <span>Then user validates that button "Pause video" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_waits_till_element_is_disappeared(java.lang.String)">
+                <span>And user waits till "Video" element is disappeared</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Items Feed" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateButton(java.lang.String,java.lang.String)">
+                <span>Then user validates that button "Home" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateIconFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that icon "Profile" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_icon(java.lang.String)">
+                <span>And user clicks on "Profile" icon</span>
+      <div>
+      </div>
+              </div>
+          </div>
+        </div>
+  </div>
+</div>
+          </div>
+        </li>
+        <li class="test-item"  status="pass" test-id="48"
+          author=""
+          tag=""
+          device="">
+          <div class="test-detail">
+            <p class="name">Verify Guest Mode access and authentication restrictions</p>
+            <p class="text-sm">
+              <span>2:07:24 PM</span> / <span>00:01:29:983</span>
+              <span class="badge pass-bg log float-right">Pass</span>
+            </p>
+          </div>
+          <div class="test-contents d-none">
+<div class="detail-head">
+<div class="p-v-10">
+<div class="info">
+<h5 class="test-status text-pass">Verify Guest Mode access and authentication restrictions</h5>
+<span class='badge badge-success'>09.12.2026 2:07:24 PM</span>
+<span class='badge badge-danger'>09.12.2026 2:08:54 PM</span>
+<span class='badge badge-default'>00:01:29:983</span>
+&middot; <span class='uri-anchor badge badge-default'>#test-id=48</span>
+<span class='badge badge-default pointer float-right ml-1 et'><i class="fa fa-chevron-down"></i></span>
+<span class='badge badge-default pointer float-right ct'><i class="fa fa-chevron-up"></i></span>
+</div>
+<div class="m-t-10 m-l-5"></div>
+</div>
+</div>
+<div class="accordion mt-4">
+  <div class="card">
+    <div class="card-header" role="tab">
+      <div class="card-title">
+        <div class="node" id="49"><span class="badge log pass-bg mr-2">Pass</span>Verify Guest Mode access and authentication restrictions</div>
+      </div>
+    </div>
+        <div class="collapse">
+          <div class="card-body">
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>Given user clicks on "Allow" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Continue as Guest" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Items Feed" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateButton(java.lang.String,java.lang.String)">
+                <span>Then user validates that button "Home" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Giveaway" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Swap" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validatePopUpFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that popup "Account required" is "Not Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateIconFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that icon "Open expanded item view" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateIconFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that icon "Filters" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Giveaway" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validatePopUpFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that popup "Account required" is "Not Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateIconFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that icon "Open expanded item view" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateIconFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that icon "Filters" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Swap" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>Given user clicks on "My Listings" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Account required" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "You need an account to do this. Sign Up or Log In to continue." is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateButton(java.lang.String,java.lang.String)">
+                <span>Then user validates that button "Log In" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateButton(java.lang.String,java.lang.String)">
+                <span>Then user validates that button "Sign Up" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.the_user_taps_outside_the_popup(java.lang.String)">
+                <span>And user taps outside the "Account required" popup</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.theAppShouldNotNavigateToANewPage()">
+                <span>Then user validates the app not navigated to a new page</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>Given user clicks on "Chat" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Account required" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "You need an account to do this. Sign Up or Log In to continue." is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateButton(java.lang.String,java.lang.String)">
+                <span>Then user validates that button "Log In" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateButton(java.lang.String,java.lang.String)">
+                <span>Then user validates that button "Sign Up" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.the_user_taps_outside_the_popup(java.lang.String)">
+                <span>And user taps outside the "Account required" popup</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.theAppShouldNotNavigateToANewPage()">
+                <span>Then user validates the app not navigated to a new page</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>Given user clicks on "My Revaliyo" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Account required" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "You need an account to do this. Sign Up or Log In to continue." is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateButton(java.lang.String,java.lang.String)">
+                <span>Then user validates that button "Log In" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateButton(java.lang.String,java.lang.String)">
+                <span>Then user validates that button "Sign Up" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.the_user_taps_outside_the_popup(java.lang.String)">
+                <span>And user taps outside the "Account required" popup</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.theAppShouldNotNavigateToANewPage()">
+                <span>Then user validates the app not navigated to a new page</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_icon(java.lang.String)">
+                <span>Given user clicks on "Create" icon</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Account required" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "You need an account to do this. Sign Up or Log In to continue." is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateButton(java.lang.String,java.lang.String)">
+                <span>Then user validates that button "Log In" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateButton(java.lang.String,java.lang.String)">
+                <span>Then user validates that button "Sign Up" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.the_user_taps_outside_the_popup(java.lang.String)">
+                <span>And user taps outside the "Account required" popup</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.theAppShouldNotNavigateToANewPage()">
+                <span>Then user validates the app not navigated to a new page</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_icon(java.lang.String)">
+                <span>Given user clicks on "Create" icon</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Sign Up" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Sign up" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Full Name" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text field "Display Name (optional)" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text field "Email" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text field "Password" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text field "Confirm Password" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateButton(java.lang.String,java.lang.String)">
+                <span>Then user validates that button "Create Account" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_icon(java.lang.String)">
+                <span>Given user clicks on "Back" icon</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_icon(java.lang.String)">
+                <span>Given user clicks on "Create" icon</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Log In" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Welcome back" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text field "Email" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text field "Password" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateButton(java.lang.String,java.lang.String)">
+                <span>Then user validates that button "Sign In" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.loadTestData(java.lang.String)">
+                <span>Given user load test data from "login.json"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_text_field(java.lang.String)">
+                <span>And user enters value in "Email" text field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_text_field(java.lang.String)">
+                <span>And user enters value in "Password" text field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Sign In" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Items Feed" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateIconFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that icon "Profile" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+          </div>
+        </div>
+  </div>
+</div>
+          </div>
+        </li>
+        <li class="test-item"  status="pass" test-id="116"
+          author=""
+          tag=""
+          device="">
+          <div class="test-detail">
+            <p class="name">Verify Create Listing Flow for a Signed-In User</p>
+            <p class="text-sm">
+              <span>2:08:54 PM</span> / <span>00:03:38:923</span>
+              <span class="badge pass-bg log float-right">Pass</span>
+            </p>
+          </div>
+          <div class="test-contents d-none">
+<div class="detail-head">
+<div class="p-v-10">
+<div class="info">
+<h5 class="test-status text-pass">Verify Create Listing Flow for a Signed-In User</h5>
+<span class='badge badge-success'>09.12.2026 2:08:54 PM</span>
+<span class='badge badge-danger'>09.12.2026 2:12:32 PM</span>
+<span class='badge badge-default'>00:03:38:923</span>
+&middot; <span class='uri-anchor badge badge-default'>#test-id=116</span>
+<span class='badge badge-default pointer float-right ml-1 et'><i class="fa fa-chevron-down"></i></span>
+<span class='badge badge-default pointer float-right ct'><i class="fa fa-chevron-up"></i></span>
+</div>
+<div class="m-t-10 m-l-5"></div>
+</div>
+</div>
+<div class="accordion mt-4">
+  <div class="card">
+    <div class="card-header" role="tab">
+      <div class="card-title">
+        <div class="node" id="117"><span class="badge log pass-bg mr-2">Pass</span>Verify Create Listing Flow for a Signed-In User</div>
+      </div>
+    </div>
+        <div class="collapse">
+          <div class="card-body">
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>Given user clicks on "Allow" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Welcome back" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.loadTestData(java.lang.String)">
+                <span>Given user load test data from "login.json"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_text_field(java.lang.String)">
+                <span>And user enters value in "Email" text field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_text_field(java.lang.String)">
+                <span>And user enters value in "Password" text field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Sign In" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Items Feed" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateIconFieldDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that icon "Profile" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.loadTestData(java.lang.String)">
+                <span>Given user load test data from "createListing.json"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_icon(java.lang.String)">
+                <span>Given user clicks on "Create" icon</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Account required" is "Not Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Create Listing" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Upload Photos" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Collections" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "From this device" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Revaliyo" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Photo taken on 9 Sept 2026 13:11" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Done" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Identify Product" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_waits_till_element_is_disappeared(java.lang.String)">
+                <span>And user waits till "Progress bar" element is disappeared</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "Product Name" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "Brand" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "Model / Series" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "Category" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "Subcategory" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "Colour / Finish" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "Condition" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_gets_field_value(java.lang.String)">
+                <span>And user gets "Product Name" field value</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_get_the_existing_value_for_from(java.lang.String,java.lang.String)">
+                <span>And user get the existing value for "Description" from "Product Name"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_text_field(java.lang.String)">
+                <span>And user enters value in "Description" text field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_gets_field_value(java.lang.String)">
+                <span>And user gets "Listing Title" field value</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_lookup_field(java.lang.String)">
+                <span>And user clicks on "Add a location" lookup field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_lookup_field(java.lang.String)">
+                <span>And user enters value in "Enter Postcode" lookup field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_selects_option_in_lookup_field(java.lang.String)">
+                <span>And user selects option in "Enter Postcode" lookup field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_selects_value_in_dropdown_field(java.lang.String)">
+                <span>And user selects value in "Condition" dropdown field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Estimate Price" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_waits_till_element_is_disappeared(java.lang.String)">
+                <span>And user waits till "Progress bar" element is disappeared</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "User Expected Value" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_text_field(java.lang.String)">
+                <span>And user enters value in "User Expected Value" text field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Giveaway" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Selected Categories" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.setcheckbox(java.lang.String,java.lang.String)">
+                <span>And user sets the checkbox "Electronics & Tech" to "checked"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Any Product Value" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Publish Now" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "My Listings" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Active" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateContentDescription(java.lang.String,java.lang.String)">
+                <span>Then user validates that content description "Listing Title" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_icon(java.lang.String)">
+                <span>Given user clicks on "Create" icon</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Account required" is "Not Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "Create Listing" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Upload Photos" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Collections" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "From this device" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Revaliyo" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Photo taken on 9 Sept 2026 13:11" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Done" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Identify Product" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_waits_till_element_is_disappeared(java.lang.String)">
+                <span>And user waits till "Progress bar" element is disappeared</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "Product Name" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "Brand" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "Model / Series" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "Category" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "Subcategory" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "Colour / Finish" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "Condition" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_gets_field_value(java.lang.String)">
+                <span>And user gets "Product Name" field value</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_get_the_existing_value_for_from(java.lang.String,java.lang.String)">
+                <span>And user get the existing value for "Description" from "Product Name"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_text_field(java.lang.String)">
+                <span>And user enters value in "Description" text field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_gets_field_value(java.lang.String)">
+                <span>And user gets "Listing Title" field value</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_selects_value_in_dropdown_field(java.lang.String)">
+                <span>And user selects value in "Condition" dropdown field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Estimate Price" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_waits_till_element_is_disappeared(java.lang.String)">
+                <span>And user waits till "Progress bar" element is disappeared</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_validates_field_value_is(java.lang.String,java.lang.String)">
+                <span>Then user validates "User Expected Value" field value is "not empty"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_enters_value_in_text_field(java.lang.String)">
+                <span>And user enters value in "User Expected Value" text field</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Giveaway" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Selected Categories" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.setcheckbox(java.lang.String,java.lang.String)">
+                <span>And user sets the checkbox "Electronics & Tech" to "checked"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Any Product Value" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Save as Draft" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateTextDisplayed(java.lang.String,java.lang.String)">
+                <span>Then user validates that text "My Listings" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Draft" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.validateContentDescription(java.lang.String,java.lang.String)">
+                <span>Then user validates that content description "Listing Title" is "Displayed"</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_icon(java.lang.String)">
+                <span>And user clicks on "Profile" icon</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Delete Account" button</span>
+      <div>
+      </div>
+              </div>
+              <div class="step pass-bg" title="com.baryonminds.revaliyo.stepdefinitions.StepDefinitions.user_clicks_on_button(java.lang.String)">
+                <span>And user clicks on "Delete Account" button</span>
+      <div>
+      </div>
+              </div>
+          </div>
+        </div>
+  </div>
+</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+<div class="test-content scrollable">
+<div class="test-content-tools">
+<ul><li><a class="back-to-test" href="#"><i class="fa fa-arrow-left"></i></a></li></ul>
+</div>
+<div class="test-content-detail"><div class="detail-body"></div></div>
+</div></div>
+<div class="container-fluid p-4 view dashboard-view">
+<div class="row">
+<div class="col-md-3">
+<div class="card"><div class="card-body">
+<p class="m-b-0">Started</p>
+<h3>Sep 12, 2026 02:05:05 PM</h3>
+</div></div>
+</div>
+<div class="col-md-3">
+<div class="card"><div class="card-body">
+<p class="m-b-0">Ended</p>
+<h3>Sep 12, 2026 02:12:32 PM</h3>
+</div></div>
+</div>
+<div class="col-md-3">
+<div class="card"><div class="card-body">
+<p class="m-b-0 text-pass">Features Passed</p>
+<h3>3</h3>
+</div></div>
+</div>
+<div class="col-md-3">
+<div class="card"><div class="card-body">
+<p class="m-b-0 text-fail">Features Failed</p>
+<h3>0</h3>
+</div></div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-4">
+<div class="card">
+<div class="card-header">
+<h6 class="card-title">Features</h6>
+</div>
+<div class="card-body">
+<div class="">
+<canvas id='parent-analysis' width='115' height='90'></canvas>
+</div>
+</div>
+<div class="card-footer">
+<div><small data-tooltip='100%'>
+<b>3</b> features passed
+</small>
+</div>
+<div>
+<small data-tooltip='0%'><b>0</b> features failed,
+<b>0</b> skipped, <b data-tooltip='0%'>0</b> others
+</small>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="card">
+<div class="card-header">
+<h6 class="card-title">Scenarios</h6>
+</div>
+<div class="card-body">
+<div class="">
+<canvas id='child-analysis' width='115' height='90'></canvas>
+</div>
+</div>
+<div class="card-footer">
+<div><small data-tooltip='100%'><b>3</b> scenarios passed</small></div>
+<div>
+<small data-tooltip='0%'><b>0</b> scenarios failed,
+<b>0</b> skipped, <b data-tooltip='%'>0</b> others
+</small>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="card">
+<div class="card-header">
+<h6 class="card-title">Steps</h6>
+</div>
+<div class="card-body">
+<div class="">
+<canvas id='grandchild-analysis' width='115' height='90'></canvas>
+</div>
+</div>
+<div class="card-footer">
+<div><small data-tooltip='100%'><b>192</b> steps passed</small></div>
+<div>
+<small data-tooltip='0%'><b>0</b> steps failed,
+<b>0</b> skipped, <b data-tooltip='%'>0</b> others
+</small>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><div class="col-md-12">
+<div class="card"><div class="card-header"><p>Timeline</p></div>
+<div class="card-body pt-0"><div>
+<canvas id="timeline" height="120"></canvas>
+</div></div>
+</div>
+</div></div>
+<script>
+var timeline = {
+"Verify New User Sign Up, Email OTP Verification, Profile Setup, and First Sign-In Flow":137.322,"Verify Guest Mode access and authentication restrictions":89.983,"Verify Create Listing Flow for a Signed-In User":218.923
+};
+</script>
+<div class="row">
+</div>
+</div>
+<script>
+var statusGroup = {
+parentCount: 5,
+passParent: 3,
+failParent: 0,
+warningParent: 0,
+skipParent: 0,
+childCount: 5,
+passChild: 3,
+failChild: 0,
+warningChild: 0,
+skipChild: 0,
+infoChild: 0,
+grandChildCount: 5,
+passGrandChild: 192,
+failGrandChild: 0,
+warningGrandChild: 0,
+skipGrandChild: 0,
+infoGrandChild: 0,
+eventsCount: 5,
+};
+</script>        </div>
+      </div>
+    </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/gh/extent-framework/extent-github-cdn@d6562a79075e061305ccfdb82f01e5e195e2d307/spark/js/spark-script.js"></script>
+<script type="text/javascript"></script></body>
+</html>
