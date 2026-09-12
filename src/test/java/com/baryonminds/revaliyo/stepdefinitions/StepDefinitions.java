@@ -118,7 +118,7 @@ public class StepDefinitions {
 	}
 
 	@Then("user sets the checkbox {string} to {string}")
-	public void setcheckbox(String textField, String expectedState) {
+	public void setcheckbox(String textField, String expectedState) throws InterruptedException {
 		pageObjects.setCheckbox(textField, expectedState);
 	}
 
@@ -160,6 +160,11 @@ public class StepDefinitions {
 
 	}
 	
+	@Then("user validates {string} field value is {string}")
+	public void user_validates_field_value_is(String fieldName, String value) {
+		pageObjects.validateFieldValue(fieldName,value);
+	}
+	
 	@Then("user selects option in {string} lookup field")
 	public void user_selects_option_in_lookup_field(String fieldName) {
 		pageObjects.clickLookupFieldOption(fieldName);
@@ -174,6 +179,16 @@ public class StepDefinitions {
 	@Then("user validates that video is {string}")
 	public void user_validates_that_video_is(String string) {
 	   pageObjects.isVideoDisplayedOrNotDisplayed(string);
+	}
+	
+	@Then("user gets {string} field value")
+	public void user_gets_field_value(String string) {
+	    pageObjects.getFieldValue(string);
+	}
+	
+	@Then("user selects value in {string} dropdown field")
+	public void user_selects_value_in_dropdown_field(String string) {
+	    pageObjects.setDropDownField(string);
 	}
 
 }

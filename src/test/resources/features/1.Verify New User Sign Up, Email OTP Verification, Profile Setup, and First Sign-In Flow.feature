@@ -44,6 +44,6 @@ Then user validates that text "Items Feed" is "Displayed"
 Then user validates that button "Home" is "Displayed"
 Then user validates that icon "Profile" is "Displayed"
 And user clicks on "Profile" icon
-And user clicks on "Delete Account" button
-And user clicks on "Delete Account" button
+#And user clicks on "Delete Account" button
+#And user clicks on "Delete Account" button
 

@@ -32,7 +32,8 @@ public class PageObjects {
 	}
 
 	private String pageSourceBeforePopup;
-	private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(PageObjects.class);
+
 
 	// Locator definitions
 
@@ -41,8 +42,19 @@ public class PageObjects {
 		fieldName = fieldName.trim();
 
 		By locator = By.xpath("//android.widget.TextView[@text='" + fieldName
-				+ "']//following-sibling::android.widget.EditText[1] | " + "//android.widget.TextView[@text='"
-				+ fieldName + "']//following::android.widget.EditText[1]");
+				+ "']//following::android.widget.EditText[1] | " + "//android.widget.TextView[@text='"+ fieldName +"']//parent::android.widget.EditText");
+
+		WebElement element = common.findElement(locator);
+
+		return element;
+
+	}
+	
+	public WebElement getTextFieldValueElement(String fieldName) {
+
+		fieldName = fieldName.trim();
+
+		By locator = By.xpath("//android.widget.TextView[@text='"+ fieldName +"']//parent::android.widget.EditText");
 
 		WebElement element = common.findElement(locator);
 
@@ -56,7 +68,9 @@ public class PageObjects {
 
 		By locator = By.xpath("//android.widget.Button[normalize-space(@text)='" + fieldName + "']"
 				+ " |  //android.view.View[@clickable='true' and .//android.widget.TextView[@text='" + fieldName
-				+ "']] | //android.widget.TextView[@text='" + fieldName + "' and @clickable='true'] | //android.view.View[@clickable='true' and .//android.view.View[@content-desc='"+fieldName+"']]");
+				+ "']] | //android.widget.TextView[@text='" + fieldName
+				+ "' and @clickable='true'] | //android.view.View[@clickable='true' and .//android.view.View[@content-desc='"
+				+ fieldName + "']] | //android.view.View[@clickable='true' and @content-desc='" + fieldName + "']");
 
 		WebElement element = common.findElement(locator);
 
@@ -126,13 +140,25 @@ public class PageObjects {
 
 	}
 
-	public WebElement getLookuptFieldElement(String fieldName) {
+	public WebElement getLookupFieldElement(String fieldName) {
 
 		fieldName = fieldName.trim();
 
 		By locator = By.xpath(
-				"//android.widget.TextView[@text='" + fieldName + "']//following-sibling::android.widget.EditText |"
-						+ "//android.widget.TextView[@text='" + fieldName + "']//following::android.view.View");
+				"//android.widget.TextView[@text='" + fieldName + "']//parent::android.view.View | //android.widget.TextView[@text='" + fieldName + "']//following::android.view.View[1]");
+
+		WebElement element = common.findElement(locator);
+
+		return element;
+
+	}
+	
+	public WebElement getLookupTextFieldElement(String fieldName) {
+
+		fieldName = fieldName.trim();
+
+		By locator = By.xpath(
+				"//android.widget.TextView[@text='" + fieldName +"']//following::android.widget.EditText");
 
 		WebElement element = common.findElement(locator);
 
@@ -152,10 +178,47 @@ public class PageObjects {
 		return element;
 
 	}
-	
+
 	public WebElement getVideoElement() {
 
-	    By locator = By.className("android.view.TextureView");
+		By locator = By.className("android.view.TextureView");
+
+		WebElement element = common.findElement(locator);
+
+		return element;
+
+	}
+
+	public WebElement getProgressBarElement() {
+
+		By locator = By.className("android.widget.ProgressBar");
+
+		WebElement element = common.findElement(locator);
+
+		return element;
+
+	}
+
+	public WebElement getDropDownElement(String fieldName) {
+
+		fieldName = fieldName.trim();
+
+		By locator = By.xpath(
+				"//android.widget.Spinner//preceding-sibling::android.widget.TextView[@text='" + fieldName + "']//parent::android.widget.EditText");
+
+		WebElement element = common.findElement(locator);
+
+		return element;
+
+	}
+
+	public WebElement getDropDownOptionsElement(String fieldName) {
+
+		fieldName = fieldName.trim();
+		
+		String fieldvalue = DataReader.get(fieldName);
+
+		By locator = By.xpath("//android.widget.ScrollView//android.widget.TextView[@text='" + fieldvalue + "']//parent::android.view.View");
 
 		WebElement element = common.findElement(locator);
 
@@ -172,20 +235,41 @@ public class PageObjects {
 	}
 
 	public void setTextInLookupField(String fieldName) throws InterruptedException {
-		WebElement element = getLookuptFieldElement(fieldName);
+		WebElement element = getLookupTextFieldElement(fieldName);
+		
+		logger.info("class = " + element.getAttribute("className"));
+		logger.info("enabled = " + element.isEnabled());
+		logger.info("focusable = " + element.getAttribute("focusable"));
+		logger.info("focused = " + element.getAttribute("focused"));
+		logger.info("clickable = " + element.getAttribute("clickable"));
+		logger.info("text = " + element.getText());
 
 		common.setText(element, DataReader.get(fieldName));
 	}
 
-	public void setCheckbox(String text, String status) {
+	public void setDropDownField(String fieldName) {
+		WebElement element = getDropDownElement(fieldName);
 
-		WebElement textElement = getCheckboxElement(text);
+		common.clickElement(element);
 
-		common.setCheckbox(textElement, status);
+		WebElement dropDownOptions = getDropDownOptionsElement(fieldName);
+
+		common.clickElement(dropDownOptions);
+	}
+
+	public void setCheckbox(String fieldName, String status) throws InterruptedException {
+		
+		fieldName = fieldName.trim();
+
+		By locator = By.xpath("(//android.widget.CheckBox//following-sibling::android.widget.TextView[@text=\"" + fieldName + "\"]//preceding-sibling::android.widget.CheckBox)[last()]");
+
+		WebElement element = common.findElement(locator);
+
+		common.setCheckbox(element, status);
 	}
 
 	public void clickButton(String fieldName) throws InterruptedException {
-Thread.sleep(2000);
+		Thread.sleep(2000);
 		pageSourceBeforePopup = driver.getPageSource();
 
 		WebElement element = getButtonElement(fieldName);
@@ -209,7 +293,7 @@ Thread.sleep(2000);
 
 	public void clickLookupField(String fieldName) {
 
-		WebElement element = getLookuptFieldElement(fieldName);
+		WebElement element = getLookupFieldElement(fieldName);
 
 		common.clickElement(element);
 	}
@@ -221,13 +305,30 @@ Thread.sleep(2000);
 		common.clickElement(element);
 	}
 
+	public void getFieldValue(String fieldName) {
+
+		WebElement element = getTextFieldValueElement(fieldName);
+
+		DataReader.set(fieldName, common.getFieldValue(element));
+		
+		logger.info(fieldName + ": " + DataReader.get(fieldName));
+	}
+	
+
 //	validation methods
 
 	public void isContentDescriptionDisplayedOrNotDisplayed(String fieldName, String status) {
+		String fieldValue;
+		try {
+			fieldValue = DataReader.get(fieldName);
+		} catch (Exception e) {
+
+			fieldValue = fieldName;
+		}
 
 		WebElement element = null;
 		try {
-			element = getContentDescriptionElement(fieldName);
+			element = getContentDescriptionElement(fieldValue);
 		} catch (Exception e) {
 		}
 		Assert.assertTrue(common.isElementDisplayedOrNotDisplayed(element, status),
@@ -298,7 +399,7 @@ Thread.sleep(2000);
 		Assert.assertTrue(common.isElementDisplayedOrNotDisplayed(element, status),
 				"Expected checkbox element '" + fieldName + "' to be " + status);
 	}
-	
+
 	public void isVideoDisplayedOrNotDisplayed(String status) {
 		WebElement element = null;
 		try {
@@ -308,21 +409,31 @@ Thread.sleep(2000);
 		Assert.assertTrue(common.isElementDisplayedOrNotDisplayed(element, status),
 				"Expected button element '" + element + "' to be " + status);
 	}
-	
+
 	public void waitTillElementDisappears(String elementType) {
 		WebElement element = null;
 		boolean status = false;
-		if(elementType.equalsIgnoreCase("Video")) {
-		try {
-			element = getVideoElement();
-			common.waitForElementToDisappear(element);
-			status = true;
-		} catch (TimeoutException e) {
-			status = false;
+		if (elementType.equalsIgnoreCase("Video")) {
+			try {
+				element = getVideoElement();
+				common.waitForElementToDisappear(element);
+				status = true;
+			} catch (TimeoutException e) {
+				status = false;
+			}
 		}
+
+		if (elementType.equalsIgnoreCase("Progress bar")) {
+			try {
+				element = getProgressBarElement();
+				common.waitForElementToDisappear(element);
+				status = true;
+			} catch (TimeoutException e) {
+				status = false;
+			}
 		}
-		
-		Assert.assertTrue(status,"Element " + element + "has not disappeared after timeout");
+
+		Assert.assertTrue(status, "Element " + element + "has not disappeared after timeout");
 	}
 
 	public void verifyAppNotNavigatedToNewPage() {
@@ -333,16 +444,64 @@ Thread.sleep(2000);
 				"App navigated to a new page after closing the popup");
 	}
 
-	public void validateFieldValue(String fieldName) {
+	public void validateFieldValue(String... params) {
 
-		String expectedValue = DataReader.get(fieldName);
-		WebElement element = getTextFieldElement(fieldName);
+		String fieldName;
+		String value = "";
+
+		switch (params.length) {
+		case 1:
+			fieldName = params[0];
+			break;
+
+		case 2:
+			fieldName = params[0];
+			value = params[1];
+			break;
+
+		default:
+			throw new IllegalArgumentException("Invalid number of parameters provided.");
+		}
+
+		WebElement element;
+
 		try {
-			common.waitForExpectedValue(element, DataReader.get(fieldName));
+			element = getTextFieldElement(fieldName);
 		} catch (Exception e) {
-			String actualValue = common.getAttributeOfElement(element, "value");
-			Assert.fail(fieldName + " field value is not as expected. Expected value: " + expectedValue
-					+ " Actual value: " + actualValue);
+			element = getDropDownElement(fieldName);
+		}
+
+		String expectedValue = "";
+
+		// Read expected value
+		try {
+			expectedValue = DataReader.get(fieldName);
+		} catch (Exception e) {
+			expectedValue = "";
+		}
+
+		if (value.equalsIgnoreCase("not empty")) {
+
+			// Verify that some value is populated
+			try {
+				common.waitForValue(element);
+			} catch (Exception e) {
+				String actualValue = common.getFieldValue(element);
+				Assert.fail("Field value is not as expected. Expected value: " + expectedValue + " Actual value: "
+						+ actualValue);
+			}
+
+		} else {
+
+			// Verify exact expected value
+			try {
+				common.waitForExpectedValue(element, expectedValue);
+			} catch (Exception e) {
+				String actualValue = common.getFieldValue(element);
+				Assert.fail("Field value is not as expected. Expected value: " + expectedValue + " Actual value: "
+						+ actualValue);
+			}
+
 		}
 	}
 

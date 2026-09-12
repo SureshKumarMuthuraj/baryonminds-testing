@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jspecify.annotations.NonNull;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -28,6 +30,8 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
 
+import com.baryonminds.revaliyo.pages.PageObjects;
+
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -43,6 +47,8 @@ public class Common {
 		ldriver = rdriver;
 
 	}
+	
+    private static final Logger logger = LogManager.getLogger(Common.class);
 
 	public boolean scrollVerticallyUntilVisible(By targetLocator) {
 
@@ -110,8 +116,11 @@ public class Common {
 	}
 
 	public WebElement findElement(By locator) {
-
-		scrollVerticalUntilVisible(locator);
+		try {
+			scrollVerticalUntilVisible(locator);
+		} catch (StaleElementReferenceException e) {
+			scrollVerticalUntilVisible(locator);
+		}
 
 		// scrollVerticallyUntilVisible(locator);
 
@@ -123,10 +132,6 @@ public class Common {
 	}
 
 	public void clickElement(WebElement element) {
-		
-		System.out.println("Displayed : " + element.isDisplayed());
-		System.out.println("Enabled   : " + element.isEnabled());
-		System.out.println("Clickable : " + element.getAttribute("clickable"));
 
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 
@@ -365,30 +370,10 @@ public class Common {
 //		isElementDisplayedOrNotDisplayed(popup, "Not Displayed");
 	}
 
-	public void setCheckbox(WebElement checkboxTextElement, String status) {
+	public void setCheckbox(WebElement checkboxElement, String status) throws InterruptedException {
 
-		List<WebElement> checkboxes = ldriver.findElements(By.className("android.widget.CheckBox"));
-
-		Rectangle textRect = checkboxTextElement.getRect();
-
-		WebElement checkbox = null;
-
-		for (WebElement cb : checkboxes) {
-
-			Rectangle cbRect = cb.getRect();
-
-			// Checkbox is immediately to the left of the text
-			if (Math.abs(cbRect.getY() - textRect.getY()) <= 2 && cbRect.getX() < textRect.getX()) {
-
-				checkbox = cb;
-				break;
-			}
-		}
-
-		if (checkbox == null) {
-			throw new NoSuchElementException("Checkbox not found for text element: " + checkboxTextElement);
-		}
-
+		Thread.sleep(3000);
+		
 		boolean shouldBeChecked;
 
 		if (status.equalsIgnoreCase("checked")) {
@@ -400,10 +385,22 @@ public class Common {
 					"Invalid checkbox status: " + status + ". Expected 'checked' or 'unchecked'.");
 		}
 
-		boolean isChecked = Boolean.parseBoolean(checkbox.getAttribute("checked"));
+		boolean isChecked = Boolean.parseBoolean(checkboxElement.getAttribute("checked"));
+		
+		logger.info(checkboxElement + " status :" + isChecked);
 
 		if (isChecked != shouldBeChecked) {
-			checkbox.click();
+			checkboxElement.click();
+		}
+		
+		
+	}
+
+	public String getText(WebElement element) {
+		try {
+			return element.getText();
+		} catch (Exception e) {
+			return null;
 		}
 	}
 
@@ -425,20 +422,48 @@ public class Common {
 				String currentValue = getAttributeOfElement(element, "value");
 				String currentText = getAttributeOfElement(element, "text");
 
-				System.out.println("Current Value: " + currentValue);
-				System.out.println("Current Text: " + currentText);
-				System.out.println("Expected Value: " + value);
-
 				return value.equals(currentValue) || value.equals(currentText);
 			}
 		});
 	}
-	
+
+	public String getFieldValue(WebElement element) {
+
+		String currentValue = getAttributeOfElement(element, "value");
+		String currentText = getAttributeOfElement(element, "text");
+
+		if (currentValue != null) {
+
+			return currentValue;
+		}
+
+		else {
+
+			return currentText;
+
+		}
+	}
+
+	public void waitForValue(WebElement element) {
+
+		wait.until(new Function<AppiumDriver, Boolean>() {
+
+			@Override
+			public Boolean apply(AppiumDriver driver) {
+
+				String currentValue = getAttributeOfElement(element, "value");
+				String currentText = getAttributeOfElement(element, "text");
+
+				return (currentValue != null && !currentValue.trim().isEmpty()) || !currentText.equals("");
+			}
+		});
+	}
+
 	public void waitForElementToDisappear(WebElement element) {
 
 		wait = new FluentWait<>(ldriver).withTimeout(Duration.ofSeconds(90)).pollingEvery(Duration.ofSeconds(1))
 				.ignoring(NoSuchElementException.class).ignoring(StaleElementReferenceException.class);
 
-	    wait.until(ExpectedConditions.invisibilityOf(element));
+		wait.until(ExpectedConditions.invisibilityOf(element));
 	}
 }
