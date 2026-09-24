@@ -1,12 +1,14 @@
 package com.baryonminds.revaliyo.pages;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Rectangle;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -32,29 +34,52 @@ public class PageObjects {
 	}
 
 	private String pageSourceBeforePopup;
-    private static final Logger logger = LogManager.getLogger(PageObjects.class);
-
+	private static final Logger logger = LogManager.getLogger(PageObjects.class);
 
 	// Locator definitions
 
 	public WebElement getTextFieldElement(String fieldName) {
 
-		fieldName = fieldName.trim();
+		fieldName = fieldName.split("_")[0].trim();
 
-		By locator = By.xpath("//android.widget.TextView[@text='" + fieldName
-				+ "']//following::android.widget.EditText[1] | " + "//android.widget.TextView[@text='"+ fieldName +"']//parent::android.widget.EditText");
+		By locator = By
+				.xpath("//android.widget.TextView[@text='" + fieldName + "']//following::android.widget.EditText[1] | "
+						+ "//android.widget.TextView[@text='" + fieldName + "']//parent::android.widget.EditText");
 
 		WebElement element = common.findElement(locator);
 
 		return element;
 
 	}
-	
+
+	public WebElement getTextFieldElementWithValue(String fieldName) {
+
+		fieldName = fieldName.split("_")[0].trim();
+
+//		By locator = By.xpath("//android.widget.TextView[@text='" + fieldName
+//				+ "']//following::android.widget.EditText[1] | //android.widget.TextView[@text='" + fieldName + "']//following-sibling::android.widget.TextView");
+//
+//		WebElement element = common.findElement(locator);
+
+		By editTextLocator = By
+				.xpath("//android.widget.TextView[@text='" + fieldName + "']//following::android.widget.EditText[1]");
+
+		By textViewLocator = By.xpath(
+				"//android.widget.TextView[@text='" + fieldName + "']//following-sibling::android.widget.TextView");
+
+		WebElement element = common.findElement(editTextLocator, textViewLocator);
+
+		return element;
+
+	}
+
 	public WebElement getTextFieldValueElement(String fieldName) {
 
-		fieldName = fieldName.trim();
+		fieldName = fieldName.split("_")[0].trim();
 
-		By locator = By.xpath("//android.widget.TextView[@text='"+ fieldName +"']//parent::android.widget.EditText");
+		By locator = By.xpath("//android.widget.TextView[@text='" + fieldName
+				+ "']//parent::android.widget.EditText | //android.widget.TextView[@text='" + fieldName
+				+ "']//following-sibling::android.widget.TextView");
 
 		WebElement element = common.findElement(locator);
 
@@ -64,11 +89,11 @@ public class PageObjects {
 
 	public WebElement getButtonElement(String fieldName) {
 
-		fieldName = fieldName.trim();
+		fieldName = fieldName.split("_")[0].trim();
 
 		By locator = By.xpath("//android.widget.Button[normalize-space(@text)='" + fieldName + "']"
-				+ " |  //android.view.View[@clickable='true' and .//android.widget.TextView[@text='" + fieldName
-				+ "']] | //android.widget.TextView[@text='" + fieldName
+				+ " |  //android.view.View[@clickable='true' and .//android.widget.TextView[normalize-space(@text)='"
+				+ fieldName + "']] | //android.widget.TextView[@text='" + fieldName
 				+ "' and @clickable='true'] | //android.view.View[@clickable='true' and .//android.view.View[@content-desc='"
 				+ fieldName + "']] | //android.view.View[@clickable='true' and @content-desc='" + fieldName + "']");
 
@@ -78,11 +103,30 @@ public class PageObjects {
 
 	}
 
+	public WebElement getButtonElementState(String fieldName) {
+
+		fieldName = fieldName.split("_")[0].trim();
+
+		By locator = By.xpath("//android.widget.TextView[normalize-space(@text)='" + fieldName + "']");
+
+		WebElement element = common.findElement(locator);
+
+		return element;
+
+	}
+
 	public WebElement getContentDescriptionElement(String fieldName) {
+		String finalValue = "";
 
-		fieldName = fieldName.trim();
+		try {
+			finalValue = DataReader.get(fieldName);
 
-		By locator = By.xpath("//android.view.View[@content-desc='" + fieldName + "']");
+		} catch (Exception e) {
+			finalValue = fieldName.split("_")[0].trim();
+		}
+
+		By locator = By.xpath("//android.view.View[@content-desc='" + finalValue
+				+ "'] | //android.widget.TextView[@text='" + finalValue + "']//parent::android.view.View");
 
 		WebElement element = common.findElement(locator);
 
@@ -92,7 +136,7 @@ public class PageObjects {
 
 	public WebElement getTextElement(String fieldName) {
 
-		fieldName = fieldName.trim();
+		fieldName = fieldName.split("_")[0].trim();
 
 		By locator = By
 				.xpath("//android.widget.TextView[normalize-space(@text)='" + fieldName + "' and @clickable='false']");
@@ -105,7 +149,7 @@ public class PageObjects {
 
 	public WebElement getPopUpElement(String fieldName) {
 
-		fieldName = fieldName.trim();
+		fieldName = fieldName.split("_")[0].trim();
 
 		By locator = By
 				.xpath("//android.widget.TextView[@text='" + fieldName + "']//ancestor::*[@pane-title='Dialogue']");
@@ -118,7 +162,7 @@ public class PageObjects {
 
 	public WebElement getIconElement(String fieldName) {
 
-		fieldName = fieldName.trim();
+		fieldName = fieldName.split("_")[0].trim();
 
 		By locator = By.xpath("//android.view.View[@content-desc='" + fieldName + "']");
 
@@ -130,7 +174,7 @@ public class PageObjects {
 
 	public WebElement getCheckboxElement(String fieldName) {
 
-		fieldName = fieldName.trim();
+		fieldName = fieldName.split("_")[0].trim();
 
 		By locator = By.xpath("//android.widget.TextView[@text=\"" + fieldName + "\"]");
 
@@ -142,23 +186,24 @@ public class PageObjects {
 
 	public WebElement getLookupFieldElement(String fieldName) {
 
-		fieldName = fieldName.trim();
+		fieldName = fieldName.split("_")[0].trim();
 
-		By locator = By.xpath(
-				"//android.widget.TextView[@text='" + fieldName + "']//parent::android.view.View | //android.widget.TextView[@text='" + fieldName + "']//following::android.view.View[1]");
+		By locator = By.xpath("//android.widget.TextView[@text='" + fieldName
+				+ "']//parent::android.view.View | //android.widget.TextView[@text='" + fieldName
+				+ "']//following::android.view.View[1]");
 
 		WebElement element = common.findElement(locator);
 
 		return element;
 
 	}
-	
+
 	public WebElement getLookupTextFieldElement(String fieldName) {
 
-		fieldName = fieldName.trim();
+		fieldName = fieldName.split("_")[0].trim();
 
-		By locator = By.xpath(
-				"//android.widget.TextView[@text='" + fieldName +"']//following::android.widget.EditText");
+		By locator = By
+				.xpath("//android.widget.TextView[@text='" + fieldName + "']//following::android.widget.EditText");
 
 		WebElement element = common.findElement(locator);
 
@@ -168,7 +213,7 @@ public class PageObjects {
 
 	public WebElement getLookuptFieldOptionElement(String fieldName) {
 
-		fieldName = fieldName.trim();
+		fieldName = fieldName.split("_")[0].trim();
 
 		By locator = By.xpath("//android.widget.TextView[@text='" + fieldName
 				+ "']//following::android.widget.TextView[1][contains(@text,'" + DataReader.get(fieldName) + "')]");
@@ -201,10 +246,10 @@ public class PageObjects {
 
 	public WebElement getDropDownElement(String fieldName) {
 
-		fieldName = fieldName.trim();
+		fieldName = fieldName.split("_")[0].trim();
 
-		By locator = By.xpath(
-				"//android.widget.Spinner//preceding-sibling::android.widget.TextView[@text='" + fieldName + "']//parent::android.widget.EditText");
+		By locator = By.xpath("//android.widget.Spinner//preceding-sibling::android.widget.TextView[@text='" + fieldName
+				+ "']//parent::android.widget.EditText");
 
 		WebElement element = common.findElement(locator);
 
@@ -214,11 +259,24 @@ public class PageObjects {
 
 	public WebElement getDropDownOptionsElement(String fieldName) {
 
-		fieldName = fieldName.trim();
-		
+		fieldName = fieldName.split("_")[0].trim();
+
 		String fieldvalue = DataReader.get(fieldName);
 
-		By locator = By.xpath("//android.widget.ScrollView//android.widget.TextView[@text='" + fieldvalue + "']//parent::android.view.View");
+		By locator = By.xpath("//android.widget.ScrollView//android.widget.TextView[@text='" + fieldvalue
+				+ "']//parent::android.view.View");
+
+		WebElement element = common.findElement(locator);
+
+		return element;
+
+	}
+
+	public WebElement getProductListingElement(int index) {
+
+		By locator = By.xpath(
+				"(//android.view.View[@clickable='true' and .//android.widget.TextView[@text='User Expected Value']]/android.widget.TextView[1])["
+						+ index + "]");
 
 		WebElement element = common.findElement(locator);
 
@@ -236,7 +294,7 @@ public class PageObjects {
 
 	public void setTextInLookupField(String fieldName) throws InterruptedException {
 		WebElement element = getLookupTextFieldElement(fieldName);
-		
+
 		logger.info("class = " + element.getAttribute("className"));
 		logger.info("enabled = " + element.isEnabled());
 		logger.info("focusable = " + element.getAttribute("focusable"));
@@ -258,10 +316,11 @@ public class PageObjects {
 	}
 
 	public void setCheckbox(String fieldName, String status) throws InterruptedException {
-		
-		fieldName = fieldName.trim();
 
-		By locator = By.xpath("(//android.widget.CheckBox//following-sibling::android.widget.TextView[@text=\"" + fieldName + "\"]//preceding-sibling::android.widget.CheckBox)[last()]");
+		fieldName = fieldName.split("_")[0].trim();
+
+		By locator = By.xpath("(//android.widget.CheckBox//following-sibling::android.widget.TextView[@text=\""
+				+ fieldName + "\"]//preceding-sibling::android.widget.CheckBox)[last()]");
 
 		WebElement element = common.findElement(locator);
 
@@ -275,6 +334,7 @@ public class PageObjects {
 		WebElement element = getButtonElement(fieldName);
 
 		common.clickElement(element);
+
 	}
 
 	public void clickIcon(String fieldName) {
@@ -298,6 +358,35 @@ public class PageObjects {
 		common.clickElement(element);
 	}
 
+	public void clickContentDescription(String fieldName) {
+
+		WebElement element = getContentDescriptionElement(fieldName);
+		try {
+			common.clickElement(element);
+		} catch (TimeoutException e) {
+
+			Throwable cause = e;
+
+			boolean stale = false;
+
+			while (cause != null) {
+				if (cause instanceof StaleElementReferenceException
+						|| cause.getClass().getName().contains("StaleObjectException")) {
+					stale = true;
+					break;
+				}
+				cause = cause.getCause();
+			}
+
+			if (stale) {
+				element = getContentDescriptionElement(fieldName);
+				common.clickElement(element);
+			} else {
+				throw e;
+			}
+		}
+	}
+
 	public void clickLookupFieldOption(String fieldName) {
 
 		WebElement element = getLookuptFieldOptionElement(fieldName);
@@ -310,10 +399,19 @@ public class PageObjects {
 		WebElement element = getTextFieldValueElement(fieldName);
 
 		DataReader.set(fieldName, common.getFieldValue(element));
-		
+
 		logger.info(fieldName + ": " + DataReader.get(fieldName));
 	}
-	
+
+	public String getProductListingName(String index) {
+
+		WebElement element = getProductListingElement(Integer.parseInt(index));
+
+		String value = common.getText(element);
+
+		return value;
+
+	}
 
 //	validation methods
 
@@ -342,6 +440,16 @@ public class PageObjects {
 		} catch (Exception e) {
 		}
 		Assert.assertTrue(common.isElementDisplayedOrNotDisplayed(element, status),
+				"Expected button element '" + fieldName + "' to be " + status);
+	}
+
+	public void isButtonEnabledOrDisabled(String fieldName, String status) {
+		WebElement element = null;
+		try {
+			element = getButtonElementState(fieldName);
+		} catch (Exception e) {
+		}
+		Assert.assertTrue(common.isElementEnabledOrDisabled(element, status),
 				"Expected button element '" + fieldName + "' to be " + status);
 	}
 
@@ -446,6 +554,72 @@ public class PageObjects {
 
 	public void validateFieldValue(String... params) {
 
+		if (params == null || params.length < 1 || params.length > 2) {
+			throw new IllegalArgumentException(
+					"Expected 1 or 2 parameters, but received: " + (params == null ? 0 : params.length));
+		}
+
+		String fieldName = params[0];
+		String value = params.length == 2 ? params[1] : "";
+
+		WebElement element;
+
+		try {
+			element = getTextFieldElementWithValue(fieldName);
+		} catch (NoSuchElementException | TimeoutException e) {
+			element = getDropDownElement(fieldName);
+		}
+
+		// Handle "not empty" separately
+		if ("not empty".equalsIgnoreCase(value)) {
+
+			try {
+				common.waitForValue(element);
+			} catch (Exception e) {
+
+				String actualValue = common.getFieldValue(element);
+
+				Assert.fail("Expected field '" + fieldName + "' to contain a value, but actual value was: '"
+						+ actualValue + "'");
+			}
+
+			return;
+		}
+
+		String expectedValue;
+
+		try {
+
+			if (value.isEmpty()) {
+				logger.info(fieldName + ": " + DataReader.get(fieldName));
+
+				expectedValue = DataReader.get(fieldName);
+			} else {
+				logger.info(fieldName + ": " + DataReader.get(value));
+				expectedValue = DataReader.get(value);
+			}
+
+		} catch (Exception e) {
+			logger.info("Exception: " + e);
+
+			expectedValue = value.isEmpty() ? fieldName : value;
+		}
+
+		try {
+
+			common.waitForExpectedValue(element, expectedValue);
+
+		} catch (Exception e) {
+
+			String actualValue = common.getFieldValue(element);
+
+			Assert.fail("Field '" + fieldName + "' value is not as expected. Expected: '" + expectedValue
+					+ "' Actual: '" + actualValue + "'");
+		}
+	}
+
+	public void validateFieldValueContains(String... params) {
+
 		String fieldName;
 		String value = "";
 
@@ -466,7 +640,7 @@ public class PageObjects {
 		WebElement element;
 
 		try {
-			element = getTextFieldElement(fieldName);
+			element = getTextFieldElementWithValue(fieldName);
 		} catch (Exception e) {
 			element = getDropDownElement(fieldName);
 		}
@@ -475,37 +649,40 @@ public class PageObjects {
 
 		// Read expected value
 		try {
-			expectedValue = DataReader.get(fieldName);
+			expectedValue = DataReader.get(value);
 		} catch (Exception e) {
 			expectedValue = "";
 		}
 
-		if (value.equalsIgnoreCase("not empty")) {
+		String actualValue = null;
+		try {
+			actualValue = common.getFieldValue(element);
 
-			// Verify that some value is populated
-			try {
-				common.waitForValue(element);
-			} catch (Exception e) {
-				String actualValue = common.getFieldValue(element);
+			if (!actualValue.contains(expectedValue)) {
+
 				Assert.fail("Field value is not as expected. Expected value: " + expectedValue + " Actual value: "
 						+ actualValue);
 			}
-
-		} else {
-
-			// Verify exact expected value
-			try {
-				common.waitForExpectedValue(element, expectedValue);
-			} catch (Exception e) {
-				String actualValue = common.getFieldValue(element);
-				Assert.fail("Field value is not as expected. Expected value: " + expectedValue + " Actual value: "
-						+ actualValue);
-			}
-
+		} catch (Exception e) {
+			Assert.fail("Field value is not as expected. Expected value: " + expectedValue + " Actual value: "
+					+ actualValue);
 		}
+
 	}
 
 	public void setNewKey(String newKey, String oldKey) {
 		DataReader.set(newKey, DataReader.get(oldKey));
+	}
+
+	public void selectStars(String question, int stars) {
+
+		if (stars < 1 || stars > 5) {
+			throw new IllegalArgumentException("Stars must be between 1 and 5. Actual: " + stars);
+		}
+
+		By locator = By.xpath("//android.widget.TextView[@text=\"" + question + "\"]"
+				+ "/following-sibling::android.widget.ImageView[@content-desc=\"" + stars + " stars\"]");
+
+		common.clickElement(common.findElement(locator));
 	}
 }

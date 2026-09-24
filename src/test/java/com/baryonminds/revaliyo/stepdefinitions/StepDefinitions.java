@@ -9,6 +9,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 import com.baryonminds.revaliyo.pages.PageObjects;
+import com.baryonminds.revaliyo.utils.Common;
 import com.baryonminds.revaliyo.utils.DataReader;
 import com.baryonminds.revaliyo.utils.DriverManager;
 import com.baryonminds.revaliyo.utils.GmailService;
@@ -25,6 +26,7 @@ import io.cucumber.java.en.Then;
 public class StepDefinitions {
 
 	private PageObjects pageObjects;
+	private Common common;
 	private JsonNode testData;
 	AppiumDriver driver;
 	private String email;
@@ -38,6 +40,7 @@ public class StepDefinitions {
 		System.out.println("========== DRIVER STARTED ==========");
 		driver = DriverManager.getDriver();
 		pageObjects = new PageObjects();
+		common = new Common(driver);
 
 	}
 
@@ -61,7 +64,7 @@ public class StepDefinitions {
 	public void user_enters_value_in_text_field(String string) throws InterruptedException {
 		pageObjects.setText(string);
 	}
-	
+
 	@Given("user enters value in {string} lookup field")
 	public void user_enters_value_in_lookup_field(String string) throws InterruptedException {
 		pageObjects.setTextInLookupField(string);
@@ -76,15 +79,15 @@ public class StepDefinitions {
 	public void user_clicks_on_icon(String string) {
 		pageObjects.clickIcon(string);
 	}
-	
+
 	@Given("user clicks on {string} lookup field")
 	public void user_clicks_on_lookup_field(String string) {
 		pageObjects.clickLookupField(string);
 	}
-	
+
 	@Given("user clicks on {string} content description")
 	public void user_clicks_on_content_description(String string) {
-		pageObjects.clickLookupField(string);
+		pageObjects.clickContentDescription(string); 
 	}
 
 	@Then("user validates that content description {string} is {string}")
@@ -95,6 +98,11 @@ public class StepDefinitions {
 	@Then("user validates that button {string} is {string}")
 	public void validateButton(String button, String expectedState) {
 		pageObjects.isButtonDisplayedOrNotDisplayed(button, expectedState);
+	}
+	
+	@Then("user validates that state of button {string} is {string}")
+	public void validateButtonStateOfButtonIs(String button, String expectedState) {
+		pageObjects.isButtonEnabledOrDisabled(button, expectedState);
 	}
 
 	@Then("user validates that text {string} is {string}")
@@ -140,55 +148,79 @@ public class StepDefinitions {
 	@Then("user gets the {string} from the email")
 	public void user_gets_the_from_the_email(String string) throws Exception {
 		otp = GmailService.getOTP(DataReader.get("Email"));
-		
-		DataReader.set("OTP",otp);
+
+		DataReader.set("OTP", otp);
 	}
-	
+
 	@Then("user validates the value of {string}")
 	public void validateFieldValue(String fieldName) {
 		pageObjects.validateFieldValue(fieldName);
 	}
-	
+
 	@Given("user get the existing value for {string} from {string}")
 	public void user_get_the_existing_value_for_from(String arg1, String arg2) throws Throwable {
 		pageObjects.setNewKey(arg1, arg2);
 	}
-	
+
 	@Then("user validates {string} field value")
 	public void user_validates_field_value(String fieldName) {
 		pageObjects.validateFieldValue(fieldName);
 
 	}
-	
+
 	@Then("user validates {string} field value is {string}")
 	public void user_validates_field_value_is(String fieldName, String value) {
-		pageObjects.validateFieldValue(fieldName,value);
+		pageObjects.validateFieldValue(fieldName, value);
 	}
-	
+
 	@Then("user selects option in {string} lookup field")
 	public void user_selects_option_in_lookup_field(String fieldName) {
 		pageObjects.clickLookupFieldOption(fieldName);
 
 	}
-	
+
 	@Then("user waits till {string} element is disappeared")
 	public void user_waits_till_element_is_disappeared(String string) {
-	    pageObjects.waitTillElementDisappears(string);
+		pageObjects.waitTillElementDisappears(string);
 	}
-	
+
 	@Then("user validates that video is {string}")
 	public void user_validates_that_video_is(String string) {
-	   pageObjects.isVideoDisplayedOrNotDisplayed(string);
+		pageObjects.isVideoDisplayedOrNotDisplayed(string);
 	}
-	
+
 	@Then("user gets {string} field value")
 	public void user_gets_field_value(String string) {
-	    pageObjects.getFieldValue(string);
+		pageObjects.getFieldValue(string);
 	}
-	
+
 	@Then("user selects value in {string} dropdown field")
 	public void user_selects_value_in_dropdown_field(String string) {
-	    pageObjects.setDropDownField(string);
+		pageObjects.setDropDownField(string);
+	}
+
+	@Then("user validates {string} field value contains {string}")
+	public void user_validates_field_value_contains(String string, String string2) {
+		pageObjects.validateFieldValueContains(string, string2);
+	}
+
+	@Given("^User generate a unique value for \"([^\"]*)\" with prefix \"([^\"]*)\"$")
+	public void user_generate_the_value_for(String arg1, String arg2) throws Throwable {
+		String value = common.generateUniqueValue(arg2);
+
+		DataReader.set(arg1, value);
+	}
+
+	@Given("user gets listing {string} name as {string}")
+	public void user_gets_listing_name_as(String arg1, String arg2) {
+		String value = pageObjects.getProductListingName(arg1);
+
+		DataReader.set(arg2, value);
+	}
+	
+	@Given("user selects {string} stars for question {string}")
+	public void selectStarsForQuestion(String stars, String question) {
+		pageObjects.selectStars(question, Integer.parseInt(stars));
 	}
 
 }

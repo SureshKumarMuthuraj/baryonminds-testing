@@ -1,8 +1,11 @@
 package com.baryonminds.revaliyo.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,12 +50,12 @@ public class Common {
 		ldriver = rdriver;
 
 	}
-	
-    private static final Logger logger = LogManager.getLogger(Common.class);
+
+	private static final Logger logger = LogManager.getLogger(Common.class);
 
 	public boolean scrollVerticallyUntilVisible(By targetLocator) {
 
-		int maxScrolls = 3;
+		int maxScrolls = 1;
 
 		for (int i = 0; i < maxScrolls; i++) {
 
@@ -124,16 +127,119 @@ public class Common {
 
 		// scrollVerticallyUntilVisible(locator);
 
-		wait = new FluentWait<>(ldriver).withTimeout(Duration.ofSeconds(10)).pollingEvery(Duration.ofSeconds(1))
+		wait = new FluentWait<>(ldriver).withTimeout(Duration.ofSeconds(3)).pollingEvery(Duration.ofSeconds(1))
 				.ignoring(NoSuchElementException.class).ignoring(StaleElementReferenceException.class);
 
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 
 	}
 
+	/*
+	 * public WebElement findElement(By primaryLocator, By secondaryLocator) {
+	 * 
+	 * try { scrollVerticalUntilVisible(primaryLocator); } catch (Exception e) { //
+	 * Primary not found/visible - don't stop here }
+	 * 
+	 * try { scrollVerticalUntilVisible(secondaryLocator); } catch (Exception e) {
+	 * // Secondary not found/visible - wait will handle it }
+	 * 
+	 * wait = new FluentWait<>(ldriver) .withTimeout(Duration.ofSeconds(10))
+	 * .pollingEvery(Duration.ofSeconds(1)) .ignoring(NoSuchElementException.class)
+	 * .ignoring(StaleElementReferenceException.class);
+	 * 
+	 * return wait.until(driver -> {
+	 * 
+	 * // Priority 1 List<WebElement> primaryElements =
+	 * driver.findElements(primaryLocator);
+	 * 
+	 * for (WebElement element : primaryElements) { if (element.isDisplayed()) {
+	 * return element; } }
+	 * 
+	 * // Priority 2 List<WebElement> secondaryElements =
+	 * driver.findElements(secondaryLocator);
+	 * 
+	 * for (WebElement element : secondaryElements) { if (element.isDisplayed()) {
+	 * return element; } }
+	 * 
+	 * return null; }); }
+	 */
+
+	private WebElement findVisibleElement(By locator) {
+
+	    List<WebElement> elements = ldriver.findElements(locator);
+
+	    for (WebElement element : elements) {
+	        try {
+	            if (element.isDisplayed()) {
+	                return element;
+	            }
+	        } catch (StaleElementReferenceException e) {
+	            // Ignore stale element
+	        }
+	    }
+
+	    return null;
+	}
+	
+	public WebElement findElement(By primaryLocator, By secondaryLocator) {
+
+	    // First: check what is already visible
+	    WebElement element = findVisibleElement(primaryLocator);
+	    if (element != null) {
+	        return element;
+	    }
+
+	    element = findVisibleElement(secondaryLocator);
+	    if (element != null) {
+	        return element;
+	    }
+
+	    // Neither is visible.
+	    // Let primary locator perform the existing scrolling.
+	    try {
+	        scrollVerticalUntilVisible(primaryLocator);
+
+	        element = findVisibleElement(primaryLocator);
+	        if (element != null) {
+	            return element;
+	        }
+
+	        // At the same scroll position, check secondary
+	        element = findVisibleElement(secondaryLocator);
+	        if (element != null) {
+	            return element;
+	        }
+
+	    } catch (Exception e) {
+	        // Primary could not be located
+	    }
+
+	    // Only if still not found, try secondary scrolling
+	    try {
+	        scrollVerticalUntilVisible(secondaryLocator);
+
+	        element = findVisibleElement(primaryLocator);
+	        if (element != null) {
+	            return element;
+	        }
+
+	        element = findVisibleElement(secondaryLocator);
+	        if (element != null) {
+	            return element;
+	        }
+
+	    } catch (Exception e) {
+	        // Secondary could not be located
+	    }
+
+	    throw new NoSuchElementException(
+	        "Neither primary nor secondary element was found"
+	    );
+	}
+	
 	public void clickElement(WebElement element) {
 
-		wait.until(ExpectedConditions.elementToBeClickable(element));
+		//wait.until(ExpectedConditions.elementToBeClickable(element));
 
 		element.click();
 
@@ -175,6 +281,18 @@ public class Common {
 		}
 
 		return status.equalsIgnoreCase("Displayed") == actualDisplayed;
+	}
+	
+	public boolean isElementEnabledOrDisabled(WebElement element, String status) {
+
+		boolean actualEnabled;
+		if (element.getAttribute("enabled").equals("true")) {
+			actualEnabled = true;
+		} else {
+			actualEnabled = false;
+		}
+
+		return status.equalsIgnoreCase("Enabled") == actualEnabled;
 	}
 
 	public void swipeLeft(WebElement element) {
@@ -373,7 +491,7 @@ public class Common {
 	public void setCheckbox(WebElement checkboxElement, String status) throws InterruptedException {
 
 		Thread.sleep(3000);
-		
+
 		boolean shouldBeChecked;
 
 		if (status.equalsIgnoreCase("checked")) {
@@ -386,14 +504,13 @@ public class Common {
 		}
 
 		boolean isChecked = Boolean.parseBoolean(checkboxElement.getAttribute("checked"));
-		
+
 		logger.info(checkboxElement + " status :" + isChecked);
 
 		if (isChecked != shouldBeChecked) {
 			checkboxElement.click();
 		}
-		
-		
+
 	}
 
 	public String getText(WebElement element) {
@@ -465,5 +582,14 @@ public class Common {
 				.ignoring(NoSuchElementException.class).ignoring(StaleElementReferenceException.class);
 
 		wait.until(ExpectedConditions.invisibilityOf(element));
+	}
+	
+	public String generateUniqueValue(String text) throws InterruptedException {
+
+		DateFormat dateFormat = new SimpleDateFormat("MM:dd HH:mm:ss");
+		Date date = new Date();
+		String date1 = dateFormat.format(date);
+		String ID = text + date1.replace(" ", "").replace(":", "");
+		return ID;
 	}
 }

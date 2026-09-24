@@ -14,14 +14,20 @@ public class ConfigReader {
     }
 
     private static void loadConfig() {
+    	
+    	  String configFile = System.getProperty(
+    	            "config",
+    	            "config/androidDevice.json"
+    	    );
+
 
         try (InputStream input = ConfigReader.class
                 .getClassLoader()
-                .getResourceAsStream("config/androidDevice.json")) {
+                .getResourceAsStream(configFile)) {
 
             if (input == null) {
                 throw new RuntimeException(
-                        "Configuration file not found: config/android.json");
+                        "Configuration file not found: " + configFile);
             }
 
             ObjectMapper mapper = new ObjectMapper();
@@ -29,7 +35,7 @@ public class ConfigReader {
 
         } catch (Exception e) {
             throw new RuntimeException(
-                    "Failed to load android.json", e);
+                    "Failed to load " + configFile, e);
         }
     }
 
