@@ -1,6 +1,8 @@
 Feature: Verify Guest Mode access and authentication restrictions
 
   Scenario: Verify Guest Mode access and authentication restrictions
+      Given user load test data from "login.json"
+
     Given user clicks on "Allow" button
     And user clicks on "Continue as Guest" button
     Then user validates that text "Items Feed" is "Displayed"
@@ -68,7 +70,6 @@ Feature: Verify Guest Mode access and authentication restrictions
     Then user validates that text field "Email" is "Displayed"
     Then user validates that text field "Password" is "Displayed"
     Then user validates that button "Sign In" is "Displayed"
-    Given user load test data from "login.json"
     And user enters value in "Email" text field
     And user enters value in "Password" text field
     And user clicks on "Sign In" button

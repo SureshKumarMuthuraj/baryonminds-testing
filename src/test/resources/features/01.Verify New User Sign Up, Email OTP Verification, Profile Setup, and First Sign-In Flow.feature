@@ -1,10 +1,11 @@
 Feature: Verify New User Sign Up, Email OTP Verification, Profile Setup, and First Sign-In Flow
 
   Scenario: Verify New User Sign Up, Email OTP Verification, Profile Setup, and First Sign-In Flow
+      Given user load test data from "accountCreation.json"
+
     Given user clicks on "Allow" button
     Then user validates that text "Welcome back" is "Displayed"
     And user clicks on "Sign up" button
-    Given user load test data from "accountCreation.json"
     Then user validates that text field "Full Name" is "Displayed"
     Then user validates that text field "Display Name (optional)" is "Displayed"
     Then user validates that text field "Email" is "Displayed"
@@ -24,7 +25,7 @@ Feature: Verify New User Sign Up, Email OTP Verification, Profile Setup, and Fir
     And user sets the checkbox "I agree to the Terms & Conditions" to "checked"
     And user sets the checkbox "I agree to the Privacy Policy" to "checked"
     And user clicks on "Create Account" button
-    And user gets the "OTP" from the email
+    And user gets the "OTP" from the email "Email"
     And user enters value in "OTP" text field
     And user clicks on "Verify" button
     Then user validates "Full Name" field value

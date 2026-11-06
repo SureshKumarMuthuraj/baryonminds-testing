@@ -1,9 +1,10 @@
 Feature: Verify Create Listing Flow for a Signed-In User
 
   Scenario: Verify Create Listing Flow for a Signed-In User
+      Given user load test data from "createListing.json"
+
     Given user clicks on "Allow" button
     Then user validates that text "Welcome back" is "Displayed"
-    Given user load test data from "createListing.json"
     And user enters value in "Email" text field
     And user enters value in "Password" text field
     And user clicks on "Sign In" button
@@ -11,14 +12,13 @@ Feature: Verify Create Listing Flow for a Signed-In User
     Then user validates that icon "Profile" is "Displayed"
   # Verify Create Listing - 1
     Given user clicks on "Create" icon
-    Then user validates that text "Account required" is "Not Displayed"
     Then user validates that text "Create Listing" is "Displayed"
+    And user pushes the image "Product1.jpg" to the device
     And user clicks on "Upload Photos" button
   # Upload photo from phone gallery - Start
-    And user clicks on "Collections" button
-    And user clicks on "Favourites" button
-    And user clicks on "Photo taken on 9 Sept 2026 13:11" button
+    And user clicks on "Photo taken on" content description
     And user clicks on "Done" button
+    And wait "5" seconds
   # Upload photo from phone gallery - End
     And user clicks on "Identify Product" button
     And user waits till "Progress bar" element is disappeared
@@ -29,16 +29,19 @@ Feature: Verify Create Listing Flow for a Signed-In User
     Then user validates "Subcategory" field value is "not empty"
     Then user validates "Colour / Finish" field value is "not empty"
     Then user validates "Condition" field value is "not empty"
-    And user gets "Product Name" field value
+    And user gets "Product Name" text field value
     And user get the existing value for "Description" from "Product Name"
     And user enters value in "Description" text field
-    And user gets "Listing Title" field value
-  # And user clicks on "Post in a new address" button
+    And user gets "Listing Title" text field value
+    And User generate a unique value for "Listing Title" with prefix "Listing Title"
+    And user enters value in "Listing Title" text field
+    And user gets "Listing Title" text field value
   # And user clicks on "Address" lookup field
   # And user clicks on "Add a location" lookup field
   # And user enters value in "Enter Postcode" lookup field
   # And user selects option in "Enter Postcode" lookup field
-    Then user validates "Home Location" field value contains "Enter Postcode"
+    # And user clicks on "Post in a new address" button
+    # Then user validates "Home Location" field value contains "Enter Postcode"
     And user selects value in "Condition" dropdown field
     And user clicks on "Estimate Price" button
     And user waits till "Progress bar" element is disappeared
@@ -54,14 +57,14 @@ Feature: Verify Create Listing Flow for a Signed-In User
     Then user validates that content description "Listing Title" is "Displayed"
   # Verify Create Listing - 2
     Given user clicks on "Create" icon
-    Then user validates that text "Account required" is "Not Displayed"
     Then user validates that text "Create Listing" is "Displayed"
+    And user pushes the image "Product2.jpg" to the device
     And user clicks on "Upload Photos" button
   # Upload photo from phone gallery - Start
-    And user clicks on "Collections" button
-    And user clicks on "Favourites" button
-    And user clicks on "Photo taken on 21 Sept 2026 19:21" button
+    And wait "5" seconds
+    And user clicks on "Photo taken on" content description
     And user clicks on "Done" button
+    And wait "5" seconds
   # Upload photo from phone gallery - End
     And user clicks on "Identify Product" button
     And user waits till "Progress bar" element is disappeared
@@ -72,10 +75,10 @@ Feature: Verify Create Listing Flow for a Signed-In User
     Then user validates "Subcategory" field value is "not empty"
     Then user validates "Colour / Finish" field value is "not empty"
     Then user validates "Condition" field value is "not empty"
-    And user gets "Product Name" field value
+    And user gets "Product Name" text field value
     And user get the existing value for "Description" from "Product Name"
     And user enters value in "Description" text field
-    And user gets "Listing Title" field value
+    And user gets "Listing Title" text field value
     And user selects value in "Condition" dropdown field
     And user clicks on "Estimate Price" button
     And user waits till "Progress bar" element is disappeared

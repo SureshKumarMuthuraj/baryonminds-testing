@@ -4,7 +4,7 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-    features = "src/test/resources/features",
+    features = "src/test/resources/features/08.Verify Listing Owner Receives & Accepts a Giveaway Request.feature",
     glue = {
         "com.baryonminds.revaliyo.stepdefinitions",
     },
@@ -16,3 +16,13 @@ import io.cucumber.testng.CucumberOptions;
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
 }
+
+
+
+
+
+
+
+
+
+

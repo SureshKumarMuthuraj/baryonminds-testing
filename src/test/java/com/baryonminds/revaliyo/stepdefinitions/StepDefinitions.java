@@ -3,6 +3,8 @@ package com.baryonminds.revaliyo.stepdefinitions;
 import java.net.MalformedURLException;
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.core.util.Assert;
 import org.openqa.selenium.OutputType;
@@ -41,6 +43,15 @@ public class StepDefinitions {
 		driver = DriverManager.getDriver();
 		pageObjects = new PageObjects();
 		common = new Common(driver);
+		
+		driver.executeScript("mobile: shell", Map.of(
+		        "command", "settings",
+		        "args", List.of(
+		            "put", "global",
+		            "policy_control",
+		            "immersive.navigation=*"
+		        )
+		    ));
 
 	}
 
@@ -87,7 +98,7 @@ public class StepDefinitions {
 
 	@Given("user clicks on {string} content description")
 	public void user_clicks_on_content_description(String string) {
-		pageObjects.clickContentDescription(string); 
+		pageObjects.clickContentDescription(string);
 	}
 
 	@Then("user validates that content description {string} is {string}")
@@ -99,7 +110,7 @@ public class StepDefinitions {
 	public void validateButton(String button, String expectedState) {
 		pageObjects.isButtonDisplayedOrNotDisplayed(button, expectedState);
 	}
-	
+
 	@Then("user validates that state of button {string} is {string}")
 	public void validateButtonStateOfButtonIs(String button, String expectedState) {
 		pageObjects.isButtonEnabledOrDisabled(button, expectedState);
@@ -145,11 +156,12 @@ public class StepDefinitions {
 		pageObjects.verifyAppNotNavigatedToNewPage();
 	}
 
-	@Then("user gets the {string} from the email")
-	public void user_gets_the_from_the_email(String string) throws Exception {
-		otp = GmailService.getOTP(DataReader.get("Email"));
+	@Then("user gets the {string} from the email {string}")
+	public void user_gets_the_from_the_email(String string, String string2) throws Exception {
+		System.out.println("DataReader.get(string2): " + DataReader.get(string2));
 
-		DataReader.set("OTP", otp);
+		otp = GmailService.getOTP(DataReader.get("Email")); 
+		DataReader.set(string, otp);
 	}
 
 	@Then("user validates the value of {string}")
@@ -173,6 +185,11 @@ public class StepDefinitions {
 		pageObjects.validateFieldValue(fieldName, value);
 	}
 
+	@Then("user validates {string} dropdown field value is {string}")
+	public void user_validates_dropdown_field_value_is(String fieldName, String value) {
+		pageObjects.validateDropDownFieldValue(fieldName, value);
+	}
+
 	@Then("user selects option in {string} lookup field")
 	public void user_selects_option_in_lookup_field(String fieldName) {
 		pageObjects.clickLookupFieldOption(fieldName);
@@ -187,6 +204,11 @@ public class StepDefinitions {
 	@Then("user validates that video is {string}")
 	public void user_validates_that_video_is(String string) {
 		pageObjects.isVideoDisplayedOrNotDisplayed(string);
+	}
+
+	@Then("user gets {string} text field value")
+	public void user_gets_text_field_value(String string) {
+		pageObjects.getTextFieldValue(string);
 	}
 
 	@Then("user gets {string} field value")
@@ -206,9 +228,7 @@ public class StepDefinitions {
 
 	@Given("^User generate a unique value for \"([^\"]*)\" with prefix \"([^\"]*)\"$")
 	public void user_generate_the_value_for(String arg1, String arg2) throws Throwable {
-		String value = common.generateUniqueValue(arg2);
-
-		DataReader.set(arg1, value);
+		DataReader.set(arg1, common.generateUniqueValue(arg2));
 	}
 
 	@Given("user gets listing {string} name as {string}")
@@ -217,10 +237,56 @@ public class StepDefinitions {
 
 		DataReader.set(arg2, value);
 	}
-	
+
 	@Given("user selects {string} stars for question {string}")
 	public void selectStarsForQuestion(String stars, String question) {
 		pageObjects.selectStars(question, Integer.parseInt(stars));
 	}
 
+	@Then("^User clicks on \"([^\"]*)\" button as optional$")
+	public void user_clicks_button_as_optional(String arg1) throws Throwable {
+		pageObjects.clickButtonOptional(arg1);
+	}
+
+	@Then("user clicks on {string} button for product with {string}")
+	public void user_clicks_on_button_for_product_with(String string, String string2) {
+		pageObjects.clickButtonBasedOnProduct(string, string2);
+	}
+
+	@Then("user validates the status is {string} for product with {string}")
+	public void user_validates_the_status_is_for_product_with(String string, String string2) {
+		pageObjects.validateStatusOfListing(string, string2);
+	}
+
+	@Given("user pushes the image {string} to the device")
+	public void user_pushes_the_image_to_the_device(String string) throws Exception {
+		common.pushImageToDevice(string);
+	}
+
+	@Given("user takes screenshot of the content description element {string} as {string}")
+	public void user_takes_screenshot_of_the_content_description_element(String string, String string2)
+			throws Exception {
+		pageObjects.takeScreenshotOfTheContentDescriptionElement(string, string2);
+	}
+
+	@Then("User validates that the images {string} and {string} are {string}")
+	public void user_validates_that_the_images_and_are(String string, String string2, String string3) throws Exception {
+		pageObjects.validateImages(string, string2, string3);
+	}
+
+	@Then("^wait \"([^\"]*)\" seconds$")
+	public void wait_Seconds(String arg) throws Throwable {
+
+		common.WaitTime(arg);
+	}
+	
+	@Then("^User merge the \"([^\"]*)\" as \"([^\"]*)\"$")
+	public void user_merge_the_as(String arg1, String arg2) throws Throwable {
+		common.concatValues(arg1, arg2);
+	}
+	
+	@Given("user clicks on {string} icon of {string} field")
+	public void user_clicks_on_icon_of_field(String string, String string2) {
+	    pageObjects.clickIconOfField(string, string2);
+	}
 }

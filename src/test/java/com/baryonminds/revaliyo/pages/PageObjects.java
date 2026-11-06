@@ -1,16 +1,30 @@
 package com.baryonminds.revaliyo.pages;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.time.Duration;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.baryonminds.revaliyo.utils.Common;
@@ -20,6 +34,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
+import io.cucumber.java.en.Then;
 import io.opentelemetry.exporter.logging.SystemOutLogRecordExporter;
 
 public class PageObjects {
@@ -61,13 +76,17 @@ public class PageObjects {
 //
 //		WebElement element = common.findElement(locator);
 
-		By editTextLocator = By
-				.xpath("//android.widget.TextView[@text='" + fieldName + "']//following::android.widget.EditText[1]");
-
-		By textViewLocator = By.xpath(
+		List<String> xpathOptions = Arrays.asList(
+				"//android.widget.TextView[@text='" + fieldName + "']//following::android.widget.EditText[1]",
 				"//android.widget.TextView[@text='" + fieldName + "']//following-sibling::android.widget.TextView");
 
-		WebElement element = common.findElement(editTextLocator, textViewLocator);
+//		By editTextLocator = By.xpath("//android.widget.TextView[@text='" + fieldName + "']//following::android.widget.EditText[1]");
+//
+//		By textViewLocator = By.xpath("//android.widget.TextView[@text='" + fieldName + "']//following-sibling::android.widget.TextView");
+
+		String xpath = common.selectLocator(xpathOptions);
+
+		WebElement element = driver.findElement(By.xpath(xpath));
 
 		return element;
 
@@ -79,7 +98,20 @@ public class PageObjects {
 
 		By locator = By.xpath("//android.widget.TextView[@text='" + fieldName
 				+ "']//parent::android.widget.EditText | //android.widget.TextView[@text='" + fieldName
-				+ "']//following-sibling::android.widget.TextView");
+				+ "']//following::android.widget.EditText[1]");
+
+		WebElement element = common.findElement(locator);
+
+		return element;
+
+	}
+
+	public WebElement getFieldValueElement(String fieldName) {
+
+		fieldName = fieldName.split("_")[0].trim();
+
+		By locator = By.xpath(
+				"//android.widget.TextView[@text='" + fieldName + "']//following-sibling::android.widget.TextView");
 
 		WebElement element = common.findElement(locator);
 
@@ -88,8 +120,6 @@ public class PageObjects {
 	}
 
 	public WebElement getButtonElement(String fieldName) {
-
-		fieldName = fieldName.split("_")[0].trim();
 
 		By locator = By.xpath("//android.widget.Button[normalize-space(@text)='" + fieldName + "']"
 				+ " |  //android.view.View[@clickable='true' and .//android.widget.TextView[normalize-space(@text)='"
@@ -116,17 +146,16 @@ public class PageObjects {
 	}
 
 	public WebElement getContentDescriptionElement(String fieldName) {
-		String finalValue = "";
+		String finalValue = DataReader.get(fieldName);
 
-		try {
-			finalValue = DataReader.get(fieldName);
-
-		} catch (Exception e) {
-			finalValue = fieldName.split("_")[0].trim();
+		if (finalValue == null) {
+			finalValue = fieldName;
 		}
 
-		By locator = By.xpath("//android.view.View[@content-desc='" + finalValue
-				+ "'] | //android.widget.TextView[@text='" + finalValue + "']//parent::android.view.View");
+		By locator = By
+				.xpath("//android.view.View[@content-desc=\"" + finalValue + "\"] | //android.widget.TextView[@text=\""
+						+ finalValue + "\"]//parent::android.view.View | //android.view.View[contains(@content-desc,\""
+						+ finalValue + "\")]");
 
 		WebElement element = common.findElement(locator);
 
@@ -136,10 +165,16 @@ public class PageObjects {
 
 	public WebElement getTextElement(String fieldName) {
 
-		fieldName = fieldName.split("_")[0].trim();
+//		fieldName = fieldName.split("_")[0].trim();
 
-		By locator = By
-				.xpath("//android.widget.TextView[normalize-space(@text)='" + fieldName + "' and @clickable='false']");
+		String finalValue = DataReader.get(fieldName);
+
+		if (finalValue == null) {
+			finalValue = fieldName;
+		}
+
+		By locator = By.xpath(
+				"//android.widget.TextView[normalize-space(@text)=\"" + finalValue + "\" and @clickable='false']");
 
 		WebElement element = common.findElement(locator);
 
@@ -164,7 +199,26 @@ public class PageObjects {
 
 		fieldName = fieldName.split("_")[0].trim();
 
-		By locator = By.xpath("//android.view.View[@content-desc='" + fieldName + "']");
+		By locator = By.xpath("//android.view.View[@content-desc='" + fieldName
+				+ "'] | //android.widget.ScrollView/android.widget.ImageView[@content-desc='" + fieldName + "']");
+		
+		if(fieldName.equals("Profile photo")) {
+			
+			locator = By.xpath("(//android.widget.TextView[@text='My Profile']//following::android.view.View//android.view.View)[1]");
+		}
+
+		WebElement element = common.findElement(locator);
+
+		return element;
+
+	}
+
+	public WebElement getIconElement(String iconElement, String fieldName) {
+
+		fieldName = fieldName.split("_")[0].trim();
+
+		By locator = By.xpath("//android.widget.TextView[@text='" + fieldName
+				+ "']//following-sibling::android.widget.ImageView[@content-desc='" + iconElement + "'][1]");
 
 		WebElement element = common.findElement(locator);
 
@@ -213,10 +267,12 @@ public class PageObjects {
 
 	public WebElement getLookuptFieldOptionElement(String fieldName) {
 
+		String finalValue = DataReader.get(fieldName);
+
 		fieldName = fieldName.split("_")[0].trim();
 
 		By locator = By.xpath("//android.widget.TextView[@text='" + fieldName
-				+ "']//following::android.widget.TextView[1][contains(@text,'" + DataReader.get(fieldName) + "')]");
+				+ "']//following::android.widget.TextView[1][contains(@text,'" + finalValue + "')]");
 
 		WebElement element = common.findElement(locator);
 
@@ -328,7 +384,9 @@ public class PageObjects {
 	}
 
 	public void clickButton(String fieldName) throws InterruptedException {
+
 		Thread.sleep(2000);
+
 		pageSourceBeforePopup = driver.getPageSource();
 
 		WebElement element = getButtonElement(fieldName);
@@ -337,9 +395,39 @@ public class PageObjects {
 
 	}
 
+	public void clickButtonOptional(String fieldName) throws InterruptedException {
+		try {
+			WebElement element = getButtonElement(fieldName);
+			common.clickElement(element);
+		} catch (Exception e) {
+
+		}
+	}
+
+	public void clickButtonBasedOnProduct(String fieldName1, String fieldName2) {
+
+		String fieldvalue = DataReader.get(fieldName2);
+
+		By locator = By.xpath("//android.view.View[@content-desc='" + fieldvalue
+				+ "']/ancestor::android.view.View[@clickable='true']//following-sibling::android.view.View//android.widget.TextView[@text='"
+				+ fieldName1 + "']");
+
+		WebElement element = common.findElement(locator);
+
+		common.clickElement(element);
+
+	}
+
 	public void clickIcon(String fieldName) {
 
 		WebElement element = getIconElement(fieldName);
+
+		common.clickElement(element);
+	}
+
+	public void clickIconOfField(String iconElement, String fieldName) {
+
+		WebElement element = getIconElement(iconElement, fieldName);
 
 		common.clickElement(element);
 	}
@@ -394,9 +482,18 @@ public class PageObjects {
 		common.clickElement(element);
 	}
 
-	public void getFieldValue(String fieldName) {
+	public void getTextFieldValue(String fieldName) {
 
 		WebElement element = getTextFieldValueElement(fieldName);
+
+		DataReader.set(fieldName, common.getFieldValue(element));
+
+		logger.info(fieldName + ": " + DataReader.get(fieldName));
+	}
+
+	public void getFieldValue(String fieldName) {
+
+		WebElement element = getFieldValueElement(fieldName);
 
 		DataReader.set(fieldName, common.getFieldValue(element));
 
@@ -410,6 +507,47 @@ public class PageObjects {
 		String value = common.getText(element);
 
 		return value;
+
+	}
+
+	public void waitForFile(Path filePath, int timeoutSeconds) throws Exception {
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+
+		wait.until(driver -> {
+			try {
+				return Files.exists(filePath) && Files.size(filePath) > 0;
+			} catch (IOException e) {
+				return false;
+			}
+		});
+	}
+
+	public void takeScreenshotOfTheContentDescriptionElement(String fieldName, String fileName) throws Exception {
+		WebElement element = getContentDescriptionElement(fieldName);
+
+		File screenshot = element.getScreenshotAs(OutputType.FILE);
+
+		Path screenshotsDir = Paths.get(System.getProperty("user.dir"), "src", "test", "resources",
+				"images_screenshots");
+
+		Files.createDirectories(screenshotsDir);
+
+		Path destination = screenshotsDir.resolve(fileName);
+
+		System.out.println("destination: " + destination);
+
+		common.fileDelete(destination);
+
+		screenshotsDir = Paths.get(System.getProperty("user.dir"), "src", "test", "resources", "images_screenshots");
+
+		Files.createDirectories(screenshotsDir);
+
+		destination = screenshotsDir.resolve(fileName);
+
+		Files.copy(screenshot.toPath(), destination);
+
+		waitForFile(destination, 30);
 
 	}
 
@@ -459,6 +597,7 @@ public class PageObjects {
 		try {
 			element = getTextElement(fieldName);
 		} catch (Exception e) {
+			logger.info("Exception: " + e);
 		}
 		Assert.assertTrue(common.isElementDisplayedOrNotDisplayed(element, status),
 				"Expected text element '" + fieldName + "' to be " + status);
@@ -618,6 +757,68 @@ public class PageObjects {
 		}
 	}
 
+	public void validateDropDownFieldValue(String... params) {
+
+		if (params == null || params.length < 1 || params.length > 2) {
+			throw new IllegalArgumentException(
+					"Expected 1 or 2 parameters, but received: " + (params == null ? 0 : params.length));
+		}
+
+		String fieldName = params[0];
+		String value = params.length == 2 ? params[1] : "";
+
+		WebElement element;
+
+		element = getDropDownElement(fieldName);
+
+		// Handle "not empty" separately
+		if ("not empty".equalsIgnoreCase(value)) {
+
+			try {
+				common.waitForValue(element);
+			} catch (Exception e) {
+
+				String actualValue = common.getFieldValue(element);
+
+				Assert.fail("Expected field '" + fieldName + "' to contain a value, but actual value was: '"
+						+ actualValue + "'");
+			}
+
+			return;
+		}
+
+		String expectedValue;
+
+		try {
+
+			if (value.isEmpty()) {
+				logger.info(fieldName + ": " + DataReader.get(fieldName));
+
+				expectedValue = DataReader.get(fieldName);
+			} else {
+				logger.info(fieldName + ": " + DataReader.get(value));
+				expectedValue = DataReader.get(value);
+			}
+
+		} catch (Exception e) {
+			logger.info("Exception: " + e);
+
+			expectedValue = value.isEmpty() ? fieldName : value;
+		}
+
+		try {
+
+			common.waitForExpectedValue(element, expectedValue);
+
+		} catch (Exception e) {
+
+			String actualValue = common.getFieldValue(element);
+
+			Assert.fail("Field '" + fieldName + "' value is not as expected. Expected: '" + expectedValue
+					+ "' Actual: '" + actualValue + "'");
+		}
+	}
+
 	public void validateFieldValueContains(String... params) {
 
 		String fieldName;
@@ -668,6 +869,28 @@ public class PageObjects {
 					+ actualValue);
 		}
 
+	}
+
+	public void validateStatusOfListing(String status, String fieldName) {
+
+		String fieldvalue = DataReader.get(fieldName);
+
+		By locator = By.xpath("//android.view.View[@content-desc='" + fieldvalue
+				+ "']/../../../following-sibling::android.widget.TextView[1]");
+
+		WebElement element = common.findElement(locator);
+
+		Assert.assertEquals(common.getFieldValue(element), status,
+				"Expected status is: " + status + " and Actual status is: " + common.getFieldValue(element));
+	}
+
+	public void validateImages(String expectedImage, String actualImage, String expectedResult) throws Exception {
+
+		boolean imagesAreSame = common.compareImages(expectedImage, actualImage);
+
+		boolean expectedSame = expectedResult.equalsIgnoreCase("same");
+
+		Assert.assertEquals(imagesAreSame, expectedSame, "Image comparison result is not as expected");
 	}
 
 	public void setNewKey(String newKey, String oldKey) {

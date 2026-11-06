@@ -12,53 +12,46 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 
 public class DriverManager {
 
-    private static AndroidDriver driver;
+	private static AndroidDriver driver;
 
-    public static void startDriver() throws MalformedURLException {
+	public static void startDriver() throws MalformedURLException {
 
-        UiAutomator2Options options = new UiAutomator2Options();
+		UiAutomator2Options options = new UiAutomator2Options();
 
-        options.setPlatformName(
-                ConfigReader.get("platformName"));
+		options.setPlatformName(ConfigReader.get("platformName"));
 
-        options.setAutomationName(
-                ConfigReader.get("automationName"));
+		options.setAutomationName(ConfigReader.get("automationName"));
 
-        options.setDeviceName(
-                ConfigReader.get("deviceName"));
+		options.setDeviceName(ConfigReader.get("deviceName"));
 
-        options.setAppPackage(
-                ConfigReader.get("appPackage"));
+		options.setAppPackage(ConfigReader.get("appPackage"));
 
-        options.setAppActivity(
-                ConfigReader.get("appActivity"));
+		options.setAppActivity(ConfigReader.get("appActivity"));
 
-        options.setNoReset(
-                ConfigReader.getBoolean("noReset"));
-        
-        options.setUiautomator2ServerLaunchTimeout(
-                Duration.ofSeconds(Integer.parseInt(ConfigReader.get("uiautomator2ServerLaunchTimeout"))));
+		options.setNoReset(ConfigReader.getBoolean("noReset"));
 
-options.setUiautomator2ServerInstallTimeout(
-                Duration.ofSeconds(Integer.parseInt(ConfigReader.get("uiautomator2ServerInstallTimeout"))));
+		options.setUiautomator2ServerLaunchTimeout(
+				Duration.ofSeconds(Integer.parseInt(ConfigReader.get("uiautomator2ServerLaunchTimeout"))));
 
-options.setAdbExecTimeout(
-                Duration.ofSeconds(Integer.parseInt(ConfigReader.get("adbExecTimeout"))));
-        
-        driver = new AndroidDriver(
-                URI.create(ConfigReader.get("appiumServerUrl")).toURL(),
-                options);
-    }
+		options.setUiautomator2ServerInstallTimeout(
+				Duration.ofSeconds(Integer.parseInt(ConfigReader.get("uiautomator2ServerInstallTimeout"))));
 
-    public static AndroidDriver getDriver() {
-        return driver;
-    }
+		options.setAdbExecTimeout(Duration.ofSeconds(Integer.parseInt(ConfigReader.get("adbExecTimeout"))));
 
-    public static void quitDriver() {
+		options.setCapability("appium:allowInsecure", "uiautomator2:adb_shell");
 
-        if (driver != null) {
-            driver.quit();
-            driver = null;
-        }
-    }
+		driver = new AndroidDriver(URI.create(ConfigReader.get("appiumServerUrl")).toURL(), options);
+	}
+
+	public static AndroidDriver getDriver() {
+		return driver;
+	}
+
+	public static void quitDriver() {
+
+		if (driver != null) {
+			driver.quit();
+			driver = null;
+		}
+	}
 }

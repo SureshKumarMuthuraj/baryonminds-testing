@@ -8,61 +8,63 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class DataReader {
 
-    private static JsonNode data;
+	private static JsonNode data;
 
-    private static void loadData(String dataFileName) {
+	private static void loadData(String dataFileName) {
 
-        try (InputStream input = DataReader.class
-                .getClassLoader()
-                .getResourceAsStream("testdata/"+dataFileName+"")) {
+		try (InputStream input = DataReader.class.getClassLoader()
+				.getResourceAsStream("testdata/" + dataFileName + "")) {
 
-            if (input == null) {
-                throw new RuntimeException(
-                        "Configuration file not found: testdata/"+dataFileName+"");
-            }
+			if (input == null) {
+				throw new RuntimeException("Configuration file not found: testdata/" + dataFileName + "");
+			}
 
-            ObjectMapper mapper = new ObjectMapper();
-            data = mapper.readTree(input);
+			ObjectMapper mapper = new ObjectMapper();
+			data = mapper.readTree(input);
 
-        } catch (Exception e) {
-            throw new RuntimeException(
-                    "Failed to load "+dataFileName+"", e);
-        }
-    }
-    
-    public static JsonNode getTestData(String dataFileName) {
-        loadData(dataFileName);
+		} catch (Exception e) {
+			throw new RuntimeException("Failed to load " + dataFileName + "", e);
+		}
+	}
+
+	public static JsonNode getTestData(String dataFileName) {
+		loadData(dataFileName);
 		return data;
-    }
+	}
 
-    public static String get(String key) {
+	public static String get(String key) {
 
-        JsonNode value = data.get(key);
+		// JsonNode value = data.get(key);
 
-        if (value == null) {
-            throw new RuntimeException(
-                    "Configuration key not found: " + key);
-        }
+//        if (value == null) {
+//            throw new RuntimeException(
+//                    "Configuration key not found: " + key);
+//        }
 
-        return value.asText();
-    }
+		JsonNode value = data.get(key);
 
-    public static boolean getBoolean(String key) {
+		if (value == null || value.isNull()) {
+			return null;
+		}
 
-        JsonNode value = data.get(key);
+		return value.asText();
+	}
 
-        if (value == null) {
-            throw new RuntimeException(
-                    "Configuration key not found: " + key);
-        }
+	public static boolean getBoolean(String key) {
 
-        return value.asBoolean();
-    }
-    
-    public static void set(String key, String value) {
+		JsonNode value = data.get(key);
 
-    	ObjectNode objectNode = (ObjectNode) data;
+		if (value == null) {
+			throw new RuntimeException("Configuration key not found: " + key);
+		}
 
-    	objectNode.put(key, value);
-}
+		return value.asBoolean();
+	}
+
+	public static void set(String key, String value) {
+
+		ObjectNode objectNode = (ObjectNode) data;
+
+		objectNode.put(key, value);
+	}
 }
